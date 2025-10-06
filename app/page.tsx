@@ -23,7 +23,7 @@ export default async function HomePage() {
   return (
     <div className="flex flex-col">
       {/* Hero Section */}
-      <section className="relative min-h-[600px] flex items-center justify-center bg-gradient-to-b from-secondary/30 to-background">
+      <section className="relative min-h-[600px] flex items-center justify-center bg-gradient-to-b from-secondary/30 to-background pt-12">
         <div className="container mx-auto px-4 md:px-6 w-full max-w-7xl">
           <div className="grid gap-8 lg:grid-cols-2 lg:gap-12 items-center">
             <div className="flex flex-col justify-center space-y-6">
@@ -150,7 +150,7 @@ export default async function HomePage() {
               </Button>
             </div>
             <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-              {upcomingEvents.map((event) => (
+              {upcomingEvents.slice(0, 3).map((event) => (
                 <Card
                   key={event.id}
                   className="overflow-hidden hover:shadow-lg transition-shadow"
@@ -199,7 +199,7 @@ export default async function HomePage() {
       <section className="py-16 md:py-24 bg-secondary/20">
         <div className="container mx-auto px-4 md:px-6 w-full max-w-7xl">
           <div className="grid gap-8 lg:grid-cols-2 items-center">
-            <div className="relative w-[500px] h-[500px] mx-auto rounded-lg overflow-hidden shadow-xl">
+            <div className="relative w-[330px] h-[330px] sm:w-[400px] sm:h-[400px] md:w-[500px] md:h-[500px] mx-auto rounded-lg overflow-hidden shadow-xl">
               <Image
                 src="/images/cd-cover.jpeg"
                 alt="Harfenzauber CD"
@@ -214,7 +214,7 @@ export default async function HomePage() {
               <p className="text-lg text-muted-foreground">
                 Eine musikalische Reise durch verschiedene Länder und Epochen
               </p>
-              <Button asChild size="lg">
+              <Button asChild size="lg" className="md:w-auto w-full">
                 <Link href="/kontakt">CD bestellen</Link>
               </Button>
             </div>

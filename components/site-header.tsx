@@ -9,11 +9,29 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { Menu, ChevronDown } from "lucide-react";
-import { useState } from "react";
+import { Menu, ChevronDown, LogOut } from "lucide-react";
+import { useState, useEffect } from "react";
+import { createClient } from "@/lib/supabase/client";
+import { useRouter } from "next/navigation";
 
 export function SiteHeader() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [isAuthed, setIsAuthed] = useState(false);
+  const router = useRouter();
+  const supabase = createClient();
+
+  useEffect(() => {
+    const checkAuth = async () => {
+      const { data } = await supabase.auth.getClaims();
+      setIsAuthed(Boolean(data?.claims));
+    };
+    void checkAuth();
+  }, [supabase]);
+
+  const handleLogout = async () => {
+    await supabase.auth.signOut();
+    router.push("/login");
+  };
 
   const serviceLinks = [
     { href: "/angebot/harfenkonzert", label: "Harfenkonzert" },
@@ -74,6 +92,17 @@ export function SiteHeader() {
             Blog
           </Link> */}
 
+          {isAuthed && (
+            <Button
+              onClick={handleLogout}
+              variant="ghost"
+              size="sm"
+              className="ml-4"
+            >
+              <LogOut className="h-4 w-4 mr-2" /> Logout
+            </Button>
+          )}
+
           <Button asChild variant="default" className="ml-4">
             <Link href="/kontakt">Kontakt</Link>
           </Button>
@@ -132,6 +161,19 @@ export function SiteHeader() {
             >
               Blog
             </Link> */}
+
+            {isAuthed && (
+              <Button
+                onClick={() => {
+                  handleLogout();
+                  setMobileMenuOpen(false);
+                }}
+                variant="ghost"
+                className="w-full justify-start"
+              >
+                <LogOut className="h-4 w-4 mr-2" /> Logout
+              </Button>
+            )}
 
             <Button asChild variant="default" className="w-full">
               <Link href="/kontakt" onClick={() => setMobileMenuOpen(false)}>
