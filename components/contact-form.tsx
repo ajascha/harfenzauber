@@ -1,118 +1,133 @@
-"use client";
+import {
+  ContactFormClient,
+  type FormState,
+} from "@/components/contact-form-client";
+import { cookies } from "next/headers";
+import { renderContactEmailHtml, sendEmail } from "@/lib/email";
 
-import { useState } from "react";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { Textarea } from "@/components/ui/textarea";
-import { CheckCircle2 } from "lucide-react";
+export async function ContactForm() {
+  async function submitAction(
+    _prev: FormState,
+    formData: FormData
+  ): Promise<FormState> {
+    "use server";
 
-export function ContactForm() {
-  const [isSubmitting, setIsSubmitting] = useState(false);
-  const [isSuccess, setIsSuccess] = useState(false);
-  const [error, setError] = useState("");
+    console.log("Contact form submitted", {
+      name: formData.get("name"),
+      email: formData.get("email"),
+    });
 
-  async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
-    e.preventDefault();
-    setIsSubmitting(true);
-    setError("");
+    const cookiesApi = await cookies();
 
-    const formData = new FormData(e.currentTarget);
-    const data = {
-      name: formData.get("name") as string,
-      email: formData.get("email") as string,
-      message: formData.get("message") as string,
-    };
+    const honeypotValue = String(formData.get("company") || "").trim();
+    if (honeypotValue) {
+      return { ok: true, message: "" };
+    }
+
+    const name = String(formData.get("name") || "").trim();
+    const email = String(formData.get("email") || "").trim();
+    const phone = String(formData.get("phone") || "").trim();
+    const message = String(formData.get("message") || "").trim();
+
+    const MIN_MESSAGE_LENGTH = 20;
+    if (message.length < MIN_MESSAGE_LENGTH) {
+      return {
+        ok: false,
+        message: "Bitte formuliere deine Nachricht etwas ausführlicher.",
+        formData: {
+          name,
+          email,
+          phone,
+          message,
+        },
+      };
+    }
+
+    const toAddress = process.env.RESEND_CONTACT_TO_EMAIL;
+    if (!toAddress) {
+      return {
+        ok: false,
+        message: "Der E-Mail-Empfänger ist nicht konfiguriert.",
+        formData: {
+          name,
+          email,
+          phone,
+          message,
+        },
+      };
+    }
+
+    const last = cookiesApi.get("cf_last")?.value;
+    const now = Date.now();
+    const windowMs = 60_000; // 60 seconds
+    if (last && now - Number(last) < windowMs) {
+      return {
+        ok: false,
+        message: "Bitte warte einen Moment, bevor du es erneut versuchst.",
+        formData: {
+          name,
+          email,
+          phone,
+          message,
+        },
+      };
+    }
+
+    const html = renderContactEmailHtml({
+      name,
+      email,
+      phone,
+      message,
+      submittedAtISO: new Date().toISOString(),
+    });
 
     try {
-      const response = await fetch("/api/contact", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(data),
+      const fromAddress = process.env.RESEND_CONTACT_FROM_EMAIL;
+      console.log(
+        "Sending email to",
+        toAddress,
+        "from",
+        fromAddress,
+        "message",
+        message
+      );
+      await sendEmail({
+        to: toAddress,
+        subject: `Neue Kontaktanfrage von ${name || "Unbekannt"}`,
+        html,
+        from: fromAddress,
+        replyTo: email,
+        bcc: "arne.wolfewicz+harfenzauber@gmail.com",
       });
 
-      if (!response.ok) throw new Error("Failed to send message");
+      cookiesApi.set("cf_last", String(now), {
+        httpOnly: true,
+        secure: true,
+        sameSite: "lax",
+        path: "/",
+        maxAge: 60 * 60 * 24, // 1 day
+      });
 
-      setIsSuccess(true);
-      (e.target as HTMLFormElement).reset();
-    } catch (err) {
-      setError(
-        "Es ist ein Fehler aufgetreten. Bitte versuche es erneut oder schreib mir direkt an info@harfenzauber.de"
-      );
-    } finally {
-      setIsSubmitting(false);
+      return {
+        ok: true,
+        message: "Danke! Ich melde mich schnellstmöglichst bei dir.",
+      };
+    } catch (error) {
+      console.error("Contact form submission failed", error);
+      return {
+        ok: false,
+        message:
+          "Es gab ein Problem beim Senden. Bitte versuche es später erneut.",
+        formData: {
+          name,
+          email,
+          phone,
+          message,
+        },
+      };
     }
   }
 
-  if (isSuccess) {
-    return (
-      <div className="rounded-lg border bg-secondary/20 p-8 text-center">
-        <CheckCircle2 className="h-12 w-12 text-primary mx-auto mb-4" />
-        <h3 className="text-xl font-semibold mb-2">
-          Vielen Dank für deine Nachricht!
-        </h3>
-        <p className="text-muted-foreground mb-4">
-          Ich melde mich zeitnah zurück.
-        </p>
-        <Button variant="outline" onClick={() => setIsSuccess(false)}>
-          Weitere Nachricht senden
-        </Button>
-      </div>
-    );
-  }
-
-  return (
-    <form onSubmit={handleSubmit} className="space-y-6">
-      <div className="space-y-2">
-        <Label htmlFor="name">Name *</Label>
-        <Input
-          id="name"
-          name="name"
-          placeholder="Dein Name"
-          required
-          disabled={isSubmitting}
-        />
-      </div>
-
-      <div className="space-y-2">
-        <Label htmlFor="email">E-Mail *</Label>
-        <Input
-          id="email"
-          name="email"
-          type="email"
-          placeholder="deine@email.de"
-          required
-          disabled={isSubmitting}
-        />
-      </div>
-
-      <div className="space-y-2">
-        <Label htmlFor="message">Nachricht *</Label>
-        <Textarea
-          id="message"
-          name="message"
-          placeholder="Deine Nachricht"
-          rows={6}
-          required
-          disabled={isSubmitting}
-        />
-      </div>
-
-      {error && (
-        <div className="rounded-lg bg-destructive/10 p-4 text-sm text-destructive">
-          {error}
-        </div>
-      )}
-
-      <Button
-        type="submit"
-        size="lg"
-        className="w-full"
-        disabled={isSubmitting}
-      >
-        {isSubmitting ? "Wird gesendet..." : "Nachricht senden"}
-      </Button>
-    </form>
-  );
+  const initial: FormState = { ok: false, message: "" };
+  return <ContactFormClient action={submitAction} initialState={initial} />;
 }
-
