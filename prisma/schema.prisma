@@ -1,0 +1,59 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
+}
+
+model HfzPost {
+  id         Int       @id @default(autoincrement())
+  title      String
+  content    String?
+  created_at DateTime? @default(now()) @db.Timestamp(6)
+  slug       String?   @unique
+
+  @@map("hfz_posts")
+}
+
+model HfzEvent {
+  id               Int       @id @default(autoincrement())
+  title            String
+  description      String
+  image_url        String?
+  starts_at        DateTime  @db.Date
+  address          String
+  price_cents      Int?
+  created_at       DateTime? @default(now()) @db.Timestamp(6)
+  registration_url String?
+  subtitle         String?
+  time_text        String?
+  venue_name       String?
+
+  @@map("hfz_events")
+}
+
+model events {
+  id              Int      @id @default(autoincrement())
+  title           String
+  description     String
+  imageUrl        String?
+  startsAt        DateTime @db.Date
+  address         String
+  priceCents      Int?
+  createdAt       DateTime @default(now())
+  registrationUrl String?
+  subtitle        String?
+  timeText        String?
+  venueName       String?
+}
+
+model posts {
+  id        Int      @id @default(autoincrement())
+  title     String
+  content   String?
+  createdAt DateTime @default(now())
+  slug      String?  @unique
+}
