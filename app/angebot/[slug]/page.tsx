@@ -198,9 +198,9 @@ export default async function AngebotPage({
             <h2 className="text-3xl font-bold tracking-tighter text-center mb-12">
               Das sagen meine Kunden
             </h2>
-            <div className="grid gap-8 md:grid-cols-2 max-w-4xl mx-auto">
+            <div className="flex flex-wrap justify-center gap-8 max-w-4xl mx-auto">
               {service.testimonials.map((testimonial, idx) => (
-                <Card key={idx} className="p-6 space-y-4">
+                <Card key={idx} className="p-6 space-y-4 max-w-2xl">
                   <p className="italic text-muted-foreground">
                     &ldquo;{testimonial.quote}&rdquo;
                   </p>
