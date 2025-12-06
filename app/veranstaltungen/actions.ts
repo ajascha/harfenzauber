@@ -27,8 +27,7 @@ export async function createEvent(formData: FormData) {
   const address = formData.get("address") as string;
   const venueName = (formData.get("venueName") as string) || null;
   const timeText = (formData.get("timeText") as string) || null;
-  const priceText = (formData.get("priceText") as string) || null;
-  const isFree = formData.get("isFree") === "on";
+  const priceText = ((formData.get("priceText") as string) || "").trim() || null;
   const registrationUrl = (formData.get("registrationUrl") as string) || null;
 
   const startsAt = new Date(startsAtStr);
@@ -44,7 +43,7 @@ export async function createEvent(formData: FormData) {
       address,
       venue_name: venueName,
       time_text: timeText,
-      price_cents: priceText ? Math.round(parseFloat(priceText) * 100) : null,
+      price_text: priceText,
       registration_url: registrationUrl,
     },
   });
@@ -70,8 +69,7 @@ export async function updateEvent(formData: FormData) {
   const address = formData.get("address") as string;
   const venueName = (formData.get("venueName") as string) || null;
   const timeText = (formData.get("timeText") as string) || null;
-  const priceText = (formData.get("priceText") as string) || null;
-  const isFree = formData.get("isFree") === "on";
+  const priceText = ((formData.get("priceText") as string) || "").trim() || null;
   const registrationUrl = (formData.get("registrationUrl") as string) || null;
 
   const startsAt = new Date(startsAtStr);
@@ -88,7 +86,7 @@ export async function updateEvent(formData: FormData) {
       address,
       venue_name: venueName,
       time_text: timeText,
-      price_cents: priceText ? Math.round(parseFloat(priceText) * 100) : null,
+      price_text: priceText,
       registration_url: registrationUrl,
     },
   });

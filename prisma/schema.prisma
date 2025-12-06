@@ -23,7 +23,7 @@ model HfzEvent {
   image_url        String?
   starts_at        DateTime  @db.Date
   address          String
-  price_cents      Int?
+  price_text       String?
   created_at       DateTime? @default(now()) @db.Timestamp(6)
   registration_url String?
   subtitle         String?

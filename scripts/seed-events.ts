@@ -82,9 +82,7 @@ async function main() {
           address,
           venue_name: venueName,
           time_text: timeText,
-          price_cents: priceText
-            ? Math.round(parseFloat(priceText) * 100)
-            : null,
+          price_text: priceText,
           registration_url: registrationUrl,
         },
       });

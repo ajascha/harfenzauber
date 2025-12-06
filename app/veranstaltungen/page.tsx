@@ -103,14 +103,14 @@ export default async function VeranstaltungenPage() {
                       </div>
                     </div>
 
-                    {event.price_cents && (
+                    {event.price_text && (
                       <div className="text-muted-foreground">
                         <span className="font-medium">Beitrag:</span>{" "}
-                        {(event.price_cents / 100).toFixed(2)} EUR
+                        {event.price_text}
                       </div>
                     )}
 
-                    {event.price_cents === null && (
+                    {!event.price_text && (
                       <div className="text-primary font-medium">
                         Kostenlose Veranstaltung
                       </div>

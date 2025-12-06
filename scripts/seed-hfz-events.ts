@@ -77,18 +77,14 @@ async function seedHfzEvents() {
         const dateStr = event["Datum & Uhrzeit"];
         const eventDate = new Date(dateStr);
 
-        // Parse price (convert EUR to cents)
-        let priceCents: number | null = null;
+        // Parse price (store as text)
+        let priceText: string | null = null;
         if (
           event.Beitrag &&
           event.Beitrag !== "" &&
           event.Kostenlos !== "true"
         ) {
-          const priceMatch = event.Beitrag.match(/(\d+(?:[.,]\d+)?)/);
-          if (priceMatch) {
-            const price = parseFloat(priceMatch[1].replace(",", "."));
-            priceCents = Math.round(price * 100);
-          }
+          priceText = event.Beitrag.trim();
         }
 
         await prisma.hfzEvent.create({
@@ -98,7 +94,7 @@ async function seedHfzEvents() {
             image_url: event.Bild || null,
             starts_at: eventDate,
             address: event.Ort || "",
-            price_cents: priceCents,
+            price_text: priceText,
             subtitle: event.Untertitel || null,
             venue_name: null, // Could be extracted from Ort if needed
             registration_url:

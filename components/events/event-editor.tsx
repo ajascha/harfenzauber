@@ -32,7 +32,7 @@ type EventLike = {
   address: string;
   venue_name: string | null;
   time_text: string | null;
-  price_cents: number | null;
+  price_text: string | null;
   registration_url: string | null;
   created_at: Date | null;
 };
@@ -200,20 +200,16 @@ export function EventEditor({ event, children }: EventEditorProps) {
           </div>
 
           <div className="grid gap-2">
-            <Label htmlFor="priceText">Preis (Freitext)</Label>
+            <Label htmlFor="priceText">
+              Preis (optional, z. B. &quot;50.00 EUR&quot; oder &quot;Auf
+              Spendenbasis&quot;)
+            </Label>
             <Input
               id="priceText"
               name="priceText"
-              placeholder="z.B. 25 EUR, Spende erbeten, etc."
-              defaultValue=""
+              type="text"
+              defaultValue={event?.price_text ?? ""}
             />
-          </div>
-
-          <div className="flex items-center space-x-2">
-            <Checkbox id="isFree" name="isFree" defaultChecked={false} />
-            <Label htmlFor="isFree" className="cursor-pointer">
-              Kostenlose Veranstaltung
-            </Label>
           </div>
 
           <div className="grid gap-2">
