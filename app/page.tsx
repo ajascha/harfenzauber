@@ -64,8 +64,8 @@ export default async function HomePage() {
           </h2>
           <div className="grid gap-8 md:grid-cols-3">
             {/* Harfenunterricht */}
-            <Card className="overflow-hidden group hover:shadow-lg transition-shadow">
-              <div className="relative h-48">
+            <Card className="overflow-hidden group hover:shadow-lg transition-shadow flex flex-col h-full">
+              <div className="relative h-48 flex-shrink-0">
                 <Image
                   src="/images/harfenunterricht.jpeg"
                   alt="Harfenunterricht"
@@ -73,11 +73,11 @@ export default async function HomePage() {
                   className="object-cover group-hover:scale-105 transition-transform duration-300"
                 />
               </div>
-              <div className="p-6">
+              <div className="p-6 flex flex-col flex-grow">
                 <h3 className="text-xl font-semibold mb-2">
                   Harfenunterricht für Kinder & Erwachsene
                 </h3>
-                <p className="text-muted-foreground mb-4">
+                <p className="text-muted-foreground mb-4 flex-grow">
                   Lerne innerhalb kurzer Zeit einfache und schöne Melodien auf
                   der Harfe zu spielen
                 </p>
@@ -88,8 +88,8 @@ export default async function HomePage() {
             </Card>
 
             {/* Veranstaltungen */}
-            <Card className="overflow-hidden group hover:shadow-lg transition-shadow">
-              <div className="relative h-48">
+            <Card className="overflow-hidden group hover:shadow-lg transition-shadow flex flex-col h-full">
+              <div className="relative h-48 flex-shrink-0">
                 <Image
                   src="/images/soloauftritt.jpeg"
                   alt="Öffentliche Veranstaltungen"
@@ -97,11 +97,11 @@ export default async function HomePage() {
                   className="object-cover group-hover:scale-105 transition-transform duration-300"
                 />
               </div>
-              <div className="p-6">
+              <div className="p-6 flex flex-col flex-grow">
                 <h3 className="text-xl font-semibold mb-2">
                   Öffentliche Veranstaltungen
                 </h3>
-                <p className="text-muted-foreground mb-4">
+                <p className="text-muted-foreground mb-4 flex-grow">
                   Erlebe Harfenmusik bei meinen regelmäßigen Konzerten und
                   Workshops
                 </p>
@@ -112,8 +112,8 @@ export default async function HomePage() {
             </Card>
 
             {/* Feste & Feiern */}
-            <Card className="overflow-hidden group hover:shadow-lg transition-shadow">
-              <div className="relative h-48">
+            <Card className="overflow-hidden group hover:shadow-lg transition-shadow flex flex-col h-full">
+              <div className="relative h-48 flex-shrink-0">
                 <Image
                   src="/images/kirche.jpeg"
                   alt="Harfenmusik für Feste & Feiern"
@@ -121,11 +121,11 @@ export default async function HomePage() {
                   className="object-cover group-hover:scale-105 transition-transform duration-300"
                 />
               </div>
-              <div className="p-6">
+              <div className="p-6 flex flex-col flex-grow">
                 <h3 className="text-xl font-semibold mb-2">
                   Harfenmusik für deine Feste & Feiern
                 </h3>
-                <p className="text-muted-foreground mb-4">
+                <p className="text-muted-foreground mb-4 flex-grow">
                   Untermale die schönsten Momente mit einem kunstvollen Programm
                 </p>
                 <Button asChild variant="outline" className="w-full">
