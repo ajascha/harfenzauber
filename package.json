@@ -16,7 +16,7 @@
     "seed:hfz-events": "tsx scripts/seed-hfz-events.ts"
   },
   "dependencies": {
-    "@next/third-parties": "^15.5.0",
+    "@next/third-parties": "^16.0.0",
     "@prisma/client": "^6.14.0",
     "@radix-ui/react-accordion": "^1.2.12",
     "@radix-ui/react-checkbox": "^1.3.1",
@@ -32,10 +32,10 @@
     "clsx": "^2.1.1",
     "csv-parse": "^6.1.0",
     "lucide-react": "^0.511.0",
-    "next": "latest",
+    "next": "^16.0.7",
     "next-themes": "^0.4.6",
-    "react": "^19.0.0",
-    "react-dom": "^19.0.0",
+    "react": "^19.0.1",
+    "react-dom": "^19.0.1",
     "react-markdown": "^10.1.0",
     "remark-gfm": "^4.0.1",
     "resend": "^6.0.1",
