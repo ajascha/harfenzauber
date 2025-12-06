@@ -62,10 +62,10 @@ export function SiteHeader() {
         </Link>
 
         {/* Desktop Navigation */}
-        <nav className="hidden md:flex items-center space-x-8 text-sm font-medium">
+        <nav className="hidden lg:flex items-center space-x-6 xl:space-x-8 text-sm font-medium">
           {mounted ? (
             <DropdownMenu>
-              <DropdownMenuTrigger className="flex items-center gap-1 transition-colors hover:text-primary">
+              <DropdownMenuTrigger className="flex items-center gap-1 transition-colors hover:text-primary whitespace-nowrap">
                 Harfenmusik für Feste & Feiern
                 <ChevronDown className="h-4 w-4" />
               </DropdownMenuTrigger>
@@ -122,7 +122,7 @@ export function SiteHeader() {
 
         {/* Mobile Menu Button */}
         <button
-          className="md:hidden"
+          className="lg:hidden"
           onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
           aria-label="Toggle menu"
         >
@@ -132,7 +132,7 @@ export function SiteHeader() {
 
       {/* Mobile Navigation */}
       {mobileMenuOpen && (
-        <div className="md:hidden border-t bg-background">
+        <div className="lg:hidden border-t bg-background">
           <nav className="container mx-auto flex flex-col space-y-4 px-4 py-6 w-full max-w-7xl">
             <div className="flex flex-col space-y-2">
               <span className="text-sm font-medium text-muted-foreground">

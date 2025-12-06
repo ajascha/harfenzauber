@@ -214,7 +214,7 @@ export default async function HomePage() {
       <section className="py-16 md:py-24 bg-secondary/20">
         <div className="container mx-auto px-4 md:px-6 w-full max-w-7xl">
           <div className="grid gap-8 lg:grid-cols-2 items-center">
-            <div className="relative w-[330px] h-[330px] sm:w-[400px] sm:h-[400px] md:w-[500px] md:h-[500px] mx-auto rounded-lg overflow-hidden shadow-xl">
+            <div className="relative w-full max-w-[330px] h-[330px] sm:max-w-[400px] sm:h-[400px] md:max-w-[500px] md:h-[500px] mx-auto rounded-lg overflow-hidden shadow-xl">
               <Image
                 src="/images/cd-cover.jpeg"
                 alt="Harfenzauber CD"

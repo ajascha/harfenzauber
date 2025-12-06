@@ -167,15 +167,15 @@ export default function HarfenunterrichtPage() {
                     Leihharfen verfügbar
                   </h3>
                   <p className="text-muted-foreground max-w-md">
-                    Verschiedene Harfenmodelle habe ich immer vorrätig. Gerne
+                  Verschiedene Harfenmodelle habe ich immer vorrätig. Gerne
                     stelle ich Dir eine Leihharfe zur Verfügung, damit du sofort
                     loslegen kannst.
-                  </p>
+                </p>
                 </div>
                 <Button
                   asChild
                   size="lg"
-                  className="shrink-0 bg-amber-600 hover:bg-amber-700 text-white"
+                  className="shrink-0 bg-amber-600 hover:bg-amber-700 text-white w-full md:w-auto"
                 >
                   <Link href="/kontakt">Leihharfe anfragen</Link>
                 </Button>
