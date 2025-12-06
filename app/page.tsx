@@ -13,7 +13,7 @@ export default async function HomePage() {
   const upcomingEvents = await prisma.hfzEvent.findMany({
     where: {
       starts_at: {
-        gte: now,
+        gt: now,
       },
     },
     orderBy: { starts_at: "asc" },
@@ -183,10 +183,25 @@ export default async function HomePage() {
                         {event.time_text && ` • ${event.time_text}`}
                       </span>
                     </div>
-                    <div className="flex items-start gap-2 text-sm text-muted-foreground">
+                    <div className="flex items-start gap-2 text-sm text-muted-foreground mb-4">
                       <MapPin className="h-4 w-4 mt-0.5 flex-shrink-0" />
                       <span className="line-clamp-1">{event.address}</span>
                     </div>
+                    <Button asChild variant="outline" className="w-full">
+                      {event.registration_url ? (
+                        <a
+                          href={event.registration_url}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                        >
+                          Anmeldung & Weitere Infos
+                        </a>
+                      ) : (
+                        <Link href="/veranstaltungen">
+                          Anmeldung & Weitere Infos
+                        </Link>
+                      )}
+                    </Button>
                   </div>
                 </Card>
               ))}
