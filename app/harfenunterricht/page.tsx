@@ -15,8 +15,8 @@ export default function HarfenunterrichtPage() {
   return (
     <div className="flex flex-col">
       {/* Hero Section */}
-      <section className="relative min-h-[400px] flex items-center justify-center bg-gradient-to-b from-secondary/30 to-background">
-        <div className="container px-4 md:px-6">
+      <section className="relative min-h-[400px] flex items-center justify-center bg-gradient-to-b from-secondary/30 to-background pt-16 md:pt-24">
+        <div className="container mx-auto px-4 md:px-6 max-w-7xl">
           <div className="grid gap-8 lg:grid-cols-2 lg:gap-12 items-center">
             <div className="flex flex-col justify-center space-y-6">
               <h1 className="text-4xl font-bold tracking-tighter sm:text-5xl xl:text-6xl/none">
@@ -37,7 +37,7 @@ export default function HarfenunterrichtPage() {
             </div>
             <div className="relative h-[400px] rounded-lg overflow-hidden shadow-2xl">
               <Image
-                src="/images/64c6bc4ae38958849173b28f_IMG_6437.JPG.jpeg"
+                src="/images/harfenunterricht.jpeg"
                 alt="Harfenunterricht in Oberberg mit Lorena Wolfewicz"
                 fill
                 className="object-cover"
@@ -50,7 +50,7 @@ export default function HarfenunterrichtPage() {
 
       {/* Erwecke deine Musikalität */}
       <section className="py-16 md:py-24">
-        <div className="container px-4 md:px-6 max-w-4xl">
+        <div className="container mx-auto px-4 md:px-6 max-w-7xl">
           <div className="text-center space-y-4">
             <h2 className="text-3xl font-bold tracking-tighter">
               Erwecke deine Musikalität
@@ -66,16 +66,16 @@ export default function HarfenunterrichtPage() {
 
       {/* Angebot Section */}
       <section id="angebot" className="py-16 md:py-24 bg-muted/30">
-        <div className="container px-4 md:px-6">
+        <div className="container mx-auto px-4 md:px-6 max-w-7xl">
           <h2 className="text-3xl font-bold tracking-tighter text-center mb-12">
             Angebot
           </h2>
-          <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3 max-w-6xl mx-auto">
+          <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
             {/* Für Kinder */}
             <Card className="p-6 space-y-4">
               <div className="relative h-48 rounded-lg overflow-hidden mb-4">
                 <Image
-                  src="/images/659ad726728703ff73520a8d_20220622_125054%20-%20Kopie%20von%2054%20kleiner%20gemacht.jpg.jpeg"
+                  src="/images/IMG_6445.JPG"
                   alt="Harfenunterricht für Kinder"
                   fill
                   className="object-cover"
@@ -104,7 +104,7 @@ export default function HarfenunterrichtPage() {
             <Card className="p-6 space-y-4">
               <div className="relative h-48 rounded-lg overflow-hidden mb-4">
                 <Image
-                  src="/images/64c6bc4ae38958849173b28f_IMG_6437.JPG.jpeg"
+                  src="/images/IMG_6346.JPG"
                   alt="Harfenunterricht für Erwachsene"
                   fill
                   className="object-cover"
@@ -153,29 +153,45 @@ export default function HarfenunterrichtPage() {
                 </p>
               </div>
             </Card>
+          </div>
 
-            {/* Leihharfen */}
-            <Card className="p-6 space-y-4 md:col-span-2 lg:col-span-1">
-              <h3 className="text-xl font-semibold">Leihharfen</h3>
-              <Separator />
-              <div className="space-y-3 text-sm text-muted-foreground">
-                <p>
-                  Verschiedene Harfenmodelle habe ich immer vorrätig. Gerne
-                  stelle ich Dir eine Leihharfe zur Verfügung.
-                </p>
+          {/* Leihharfen - Feature badge spanning full width */}
+          <div className="mt-8">
+            <div className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-amber-100 via-amber-50 to-orange-50 dark:from-amber-950/40 dark:via-amber-900/20 dark:to-orange-950/30 p-8 md:p-10">
+              <div className="relative flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
+                <div className="space-y-2">
+                  <span className="inline-block px-3 py-1 text-xs font-medium rounded-full bg-amber-200/60 dark:bg-amber-800/40 text-amber-800 dark:text-amber-200 mb-2">
+                    Kein eigenes Instrument?
+                  </span>
+                  <h3 className="text-2xl font-bold tracking-tight">
+                    Leihharfen verfügbar
+                  </h3>
+                  <p className="text-muted-foreground max-w-md">
+                    Verschiedene Harfenmodelle habe ich immer vorrätig. Gerne
+                    stelle ich Dir eine Leihharfe zur Verfügung, damit du sofort
+                    loslegen kannst.
+                  </p>
+                </div>
+                <Button
+                  asChild
+                  size="lg"
+                  className="shrink-0 bg-amber-600 hover:bg-amber-700 text-white"
+                >
+                  <Link href="/kontakt">Leihharfe anfragen</Link>
+                </Button>
               </div>
-            </Card>
+            </div>
           </div>
         </div>
       </section>
 
       {/* Testimonials */}
       <section className="py-16 md:py-24">
-        <div className="container px-4 md:px-6">
+        <div className="container mx-auto px-4 md:px-6 max-w-7xl">
           <h2 className="text-3xl font-bold tracking-tighter text-center mb-12">
             Stimmen von Schülerinnen und Schülern
           </h2>
-          <div className="grid gap-8 md:grid-cols-3 max-w-6xl mx-auto">
+          <div className="grid gap-8 md:grid-cols-3">
             <Card className="p-6 space-y-4">
               <p className="italic text-muted-foreground">
                 "Durch den Unterricht mache ich schnelle Fortschritte auf der
@@ -208,11 +224,11 @@ export default function HarfenunterrichtPage() {
 
       {/* Über Lorena */}
       <section className="py-16 md:py-24 bg-secondary/20">
-        <div className="container px-4 md:px-6">
-          <div className="grid gap-8 lg:grid-cols-2 items-center max-w-6xl mx-auto">
+        <div className="container mx-auto px-4 md:px-6 max-w-7xl">
+          <div className="grid gap-8 lg:grid-cols-2 items-center">
             <div className="relative h-[400px] rounded-lg overflow-hidden shadow-xl">
               <Image
-                src="/images/64c6bbff4f6e28a5b3c32fec_Lorena%20Wolfewicz%20Harfe.JPG.jpeg"
+                src="/images/lorena-hero.jpeg"
                 alt="Lorena Wolfewicz"
                 fill
                 className="object-cover"
@@ -238,7 +254,7 @@ export default function HarfenunterrichtPage() {
 
       {/* CTA Section */}
       <section className="py-16 md:py-24">
-        <div className="container px-4 md:px-6 text-center">
+        <div className="container mx-auto px-4 md:px-6 max-w-7xl text-center">
           <h2 className="text-3xl font-bold tracking-tighter mb-6">
             Bereit, Harfe zu lernen?
           </h2>

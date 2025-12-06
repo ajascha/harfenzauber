@@ -155,6 +155,9 @@ export default async function VeranstaltungenPage() {
           <h2 className="text-3xl font-bold tracking-tighter mb-8">
             Vergangene Veranstaltungen
           </h2>
+          <p className="text-muted-foreground pb-4">
+            Die siehst du nur, weil du eingeloggt bist.
+          </p>
           <div className="space-y-6">
             {pastEvents.map((event) => (
               <EventCard key={event.id} event={event} />

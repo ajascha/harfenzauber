@@ -20,6 +20,7 @@ import {
   updateEvent,
   deleteEvent,
 } from "@/app/veranstaltungen/actions";
+import { ImageGallery } from "@/components/image-gallery";
 
 type EventLike = {
   id: number;
@@ -45,27 +46,9 @@ export function EventEditor({ event, children }: EventEditorProps) {
   const [open, setOpen] = React.useState(false);
   const [pending, setPending] = React.useState(false);
   const action = event ? updateEvent : createEvent;
-  const [uploading, setUploading] = React.useState(false);
   const [imageUrl, setImageUrl] = React.useState<string | null>(
     event?.image_url ?? null
   );
-
-  async function handleFile(file: File) {
-    try {
-      setUploading(true);
-      const body = new FormData();
-      body.set("file", file);
-      const res = await fetch("/api/upload", { method: "POST", body });
-      const json = await res.json();
-      if (!res.ok) throw new Error(json?.error || "Upload failed");
-      setImageUrl(json.publicUrl as string);
-    } catch (e) {
-      console.error(e);
-      alert("Upload fehlgeschlagen");
-    } finally {
-      setUploading(false);
-    }
-  }
 
   async function onSubmit(formData: FormData) {
     try {
@@ -100,7 +83,7 @@ export function EventEditor({ event, children }: EventEditorProps) {
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>{children}</DialogTrigger>
-      <DialogContent className="max-h-[90vh] overflow-y-auto">
+      <DialogContent>
         <DialogHeader>
           <DialogTitle>
             {event
@@ -152,7 +135,7 @@ export function EventEditor({ event, children }: EventEditorProps) {
           <div className="grid gap-2">
             <Label>Bild</Label>
             {imageUrl && (
-              <div className="relative w-full h-40 rounded-md overflow-hidden border">
+              <div className="relative w-full h-40 rounded-md overflow-hidden border mb-3">
                 <Image
                   src={imageUrl}
                   alt="Event Bild"
@@ -161,21 +144,11 @@ export function EventEditor({ event, children }: EventEditorProps) {
                 />
               </div>
             )}
-            <div className="flex items-center gap-3">
-              <Input
-                type="file"
-                accept="image/png,image/jpeg,image/webp"
-                onChange={(e) => {
-                  const file = e.target.files?.[0];
-                  if (file) void handleFile(file);
-                }}
-              />
-              {uploading && (
-                <span className="text-sm text-muted-foreground">
-                  Lade hoch…
-                </span>
-              )}
-            </div>
+            <ImageGallery
+              currentImageUrl={imageUrl}
+              onSelectImage={setImageUrl}
+              onUploadComplete={setImageUrl}
+            />
             <input type="hidden" name="imageUrl" value={imageUrl ?? ""} />
           </div>
 

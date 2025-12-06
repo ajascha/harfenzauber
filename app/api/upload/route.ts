@@ -45,7 +45,7 @@ export async function POST(request: Request) {
       .from("images")
       .upload(key, file, {
         cacheControl: "3600",
-        upsert: false,
+        upsert: true,
         contentType: file.type || undefined,
       });
 
