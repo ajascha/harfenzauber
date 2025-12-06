@@ -57,7 +57,9 @@ export function EventEditor({ event, children }: EventEditorProps) {
       await action(formData);
       setOpen(false);
     } catch (e) {
-      console.error(e);
+      if (process.env.NODE_ENV === "development") {
+        console.error(e);
+      }
       alert((e as Error).message || "Fehler beim Speichern");
     } finally {
       setPending(false);
@@ -73,7 +75,9 @@ export function EventEditor({ event, children }: EventEditorProps) {
       await deleteEvent(event.id);
       setOpen(false);
     } catch (e) {
-      console.error(e);
+      if (process.env.NODE_ENV === "development") {
+        console.error(e);
+      }
       alert((e as Error).message || "Fehler beim Löschen");
     } finally {
       setPending(false);

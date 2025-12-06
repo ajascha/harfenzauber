@@ -1,6 +1,34 @@
 import { Resend } from "resend";
 
-const resend = new Resend(process.env.RESEND_API_KEY);
+type SendEmailParams = {
+  to: string | string[];
+  subject: string;
+  html: string;
+  from?: string;
+  replyTo?: string | string[];
+  bcc?: string | string[];
+};
+
+let cachedResend: Resend | null = null;
+
+function getResendClient(): Resend {
+  if (cachedResend) return cachedResend;
+  const apiKey = process.env.RESEND_API_KEY;
+  if (!apiKey) {
+    throw new Error("RESEND_API_KEY is not set");
+  }
+  cachedResend = new Resend(apiKey);
+  return cachedResend;
+}
+
+function escapeHtml(input: string): string {
+  return input
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#039;");
+}
 
 export function renderContactEmailHtml({
   name,
@@ -93,19 +121,19 @@ export function renderContactEmailHtml({
       <body>
         <div class="header">
           <h1 style="margin: 0; font-size: 24px;">Neue Kontaktanfrage</h1>
-          <p style="margin: 10px 0 0 0; opacity: 0.9;">Eingegangen am ${submittedAt}</p>
+          <p style="margin: 10px 0 0 0; opacity: 0.9;">Eingegangen am ${escapeHtml(submittedAt)}</p>
         </div>
         
         <div class="content">
           <div class="field">
             <div class="field-label">Name</div>
-            <div class="field-value">${name}</div>
+            <div class="field-value">${escapeHtml(name)}</div>
           </div>
           
           <div class="field">
             <div class="field-label">E-Mail</div>
             <div class="field-value">
-              <a href="mailto:${email}" style="color: #667eea; text-decoration: none;">${email}</a>
+              <a href="mailto:${escapeHtml(email)}" style="color: #667eea; text-decoration: none;">${escapeHtml(email)}</a>
             </div>
           </div>
           
@@ -115,7 +143,7 @@ export function renderContactEmailHtml({
           <div class="field">
             <div class="field-label">Telefon</div>
             <div class="field-value">
-              <a href="tel:${phone}" style="color: #667eea; text-decoration: none;">${phone}</a>
+              <a href="tel:${escapeHtml(phone)}" style="color: #667eea; text-decoration: none;">${escapeHtml(phone)}</a>
             </div>
           </div>
           `
@@ -124,7 +152,7 @@ export function renderContactEmailHtml({
           
           <div class="field">
             <div class="field-label">Nachricht</div>
-            <div class="message-field">${message}</div>
+            <div class="message-field">${escapeHtml(message).replace(/\n/g, "<br/>")}</div>
           </div>
         </div>
         
@@ -136,34 +164,32 @@ export function renderContactEmailHtml({
   `;
 }
 
-export async function sendEmail({
-  to,
-  subject,
-  html,
-  from,
-  replyTo,
-  bcc,
-}: {
-  to: string;
-  subject: string;
-  html: string;
-  from?: string;
-  replyTo?: string;
-  bcc?: string;
-}) {
-  const { data, error } = await resend.emails.send({
-    from: from || "Harfenzauber Kontaktformular <noreply@harfenzauber.de>",
-    to,
-    subject,
-    html,
-    replyTo,
-    bcc,
-  });
-
-  if (error) {
-    console.error("Error sending email:", error);
-    throw new Error(`Failed to send email: ${error.message}`);
+export async function sendEmail(params: SendEmailParams) {
+  const resend = getResendClient();
+  const fromAddress = params.from || process.env.RESEND_CONTACT_FROM_EMAIL;
+  if (!fromAddress) {
+    throw new Error(
+      "No 'from' address was provided and RESEND_CONTACT_FROM_EMAIL is not set."
+    );
   }
 
-  return data;
+  try {
+    const response = await resend.emails.send({
+      from: fromAddress,
+      to: params.to,
+      subject: params.subject,
+      html: params.html,
+      replyTo: params.replyTo,
+      bcc: params.bcc,
+    });
+    if (process.env.NODE_ENV === "development") {
+      console.log("Resend response:", JSON.stringify(response, null, 2));
+    }
+    return response;
+  } catch (error) {
+    if (process.env.NODE_ENV === "development") {
+      console.error("Error sending email via Resend:", error);
+    }
+    throw error;
+  }
 }

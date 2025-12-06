@@ -14,7 +14,9 @@ export async function GET() {
       });
 
     if (error) {
-      console.error("[images] list error", error);
+      if (process.env.NODE_ENV === "development") {
+        console.error("[images] list error", error);
+      }
       return NextResponse.json({ error: error.message }, { status: 400 });
     }
 
@@ -36,7 +38,9 @@ export async function GET() {
 
     return NextResponse.json({ images });
   } catch (e) {
-    console.error("[images] exception", e);
+    if (process.env.NODE_ENV === "development") {
+      console.error("[images] exception", e);
+    }
     return NextResponse.json(
       { error: "Failed to list images" },
       { status: 500 }

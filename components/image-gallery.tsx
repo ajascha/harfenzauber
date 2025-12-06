@@ -40,7 +40,9 @@ export function ImageGallery({
           setImages(json.images || []);
         }
       } catch (e) {
-        console.error("Failed to load images", e);
+        if (process.env.NODE_ENV === "development") {
+          console.error("Failed to load images", e);
+        }
       } finally {
         setLoading(false);
       }
@@ -66,7 +68,9 @@ export function ImageGallery({
       setSelectedUrl(json.publicUrl);
       onUploadComplete(json.publicUrl);
     } catch (e) {
-      console.error(e);
+      if (process.env.NODE_ENV === "development") {
+        console.error(e);
+      }
       alert("Upload fehlgeschlagen: " + (e as Error).message);
     } finally {
       setUploading(false);

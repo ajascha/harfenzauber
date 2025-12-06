@@ -12,10 +12,12 @@ export async function ContactForm() {
   ): Promise<FormState> {
     "use server";
 
-    console.log("Contact form submitted", {
-      name: formData.get("name"),
-      email: formData.get("email"),
-    });
+    if (process.env.NODE_ENV === "development") {
+      console.log("Contact form submitted", {
+        name: formData.get("name"),
+        email: formData.get("email"),
+      });
+    }
 
     const cookiesApi = await cookies();
 
@@ -28,6 +30,21 @@ export async function ContactForm() {
     const email = String(formData.get("email") || "").trim();
     const phone = String(formData.get("phone") || "").trim();
     const message = String(formData.get("message") || "").trim();
+
+    // Validate email format
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) {
+      return {
+        ok: false,
+        message: "Bitte gib eine gültige E-Mail-Adresse ein.",
+        formData: {
+          name,
+          email,
+          phone,
+          message,
+        },
+      };
+    }
 
     const MIN_MESSAGE_LENGTH = 20;
     if (message.length < MIN_MESSAGE_LENGTH) {
@@ -83,21 +100,23 @@ export async function ContactForm() {
 
     try {
       const fromAddress = process.env.RESEND_CONTACT_FROM_EMAIL;
-      console.log(
-        "Sending email to",
-        toAddress,
-        "from",
-        fromAddress,
-        "message",
-        message
-      );
+      if (process.env.NODE_ENV === "development") {
+        console.log(
+          "Sending email to",
+          toAddress,
+          "from",
+          fromAddress,
+          "message",
+          message
+        );
+      }
       await sendEmail({
         to: toAddress,
         subject: `Neue Kontaktanfrage von ${name || "Unbekannt"}`,
         html,
         from: fromAddress,
         replyTo: email,
-        bcc: "arne.wolfewicz+harfenzauber@gmail.com",
+        bcc: process.env.RESEND_BCC_EMAIL,
       });
 
       cookiesApi.set("cf_last", String(now), {
@@ -113,7 +132,9 @@ export async function ContactForm() {
         message: "Danke! Ich melde mich schnellstmöglichst bei dir.",
       };
     } catch (error) {
-      console.error("Contact form submission failed", error);
+      if (process.env.NODE_ENV === "development") {
+        console.error("Contact form submission failed", error);
+      }
       return {
         ok: false,
         message:
