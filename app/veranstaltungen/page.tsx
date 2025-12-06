@@ -21,7 +21,7 @@ export default async function VeranstaltungenPage() {
   const isAuthed = Boolean(data?.claims);
 
   const now = new Date();
-  const upcomingEvents = await prisma.hfzEvent.findMany({
+  const events = await prisma.hfzEvent.findMany({
     where: {
       starts_at: {
         gte: now,
@@ -29,98 +29,6 @@ export default async function VeranstaltungenPage() {
     },
     orderBy: { starts_at: "asc" },
   });
-
-  const pastEvents = isAuthed
-    ? await prisma.hfzEvent.findMany({
-        where: {
-          starts_at: {
-            lt: now,
-          },
-        },
-        orderBy: { starts_at: "desc" },
-      })
-    : [];
-
-  type HfzEvent = (typeof upcomingEvents)[0];
-
-  const EventCard = ({ event }: { event: HfzEvent }) => (
-    <Card
-      key={event.id}
-      className="overflow-hidden hover:shadow-lg transition-shadow"
-    >
-      <div className="flex flex-col md:flex-row gap-6 p-6">
-        {event.image_url && (
-          <div className="relative w-full md:w-64 h-48 flex-shrink-0 rounded-lg overflow-hidden">
-            <Image
-              src={event.image_url}
-              alt={event.title}
-              fill
-              className="object-cover"
-            />
-          </div>
-        )}
-        <div className="flex-1 space-y-3">
-          <div>
-            <h2 className="text-2xl font-semibold mb-1">{event.title}</h2>
-            {event.subtitle && (
-              <p className="text-muted-foreground">{event.subtitle}</p>
-            )}
-          </div>
-
-          <p className="text-muted-foreground leading-relaxed">
-            {event.description}
-          </p>
-
-          <div className="space-y-2 text-sm">
-            <div className="flex items-start gap-2">
-              <Calendar className="h-4 w-4 mt-0.5 flex-shrink-0 text-primary" />
-              <span>
-                {new Intl.DateTimeFormat("de-DE", {
-                  dateStyle: "full",
-                }).format(event.starts_at)}
-                {event.time_text && ` • ${event.time_text}`}
-              </span>
-            </div>
-
-            <div className="flex items-start gap-2">
-              <MapPin className="h-4 w-4 mt-0.5 flex-shrink-0 text-primary" />
-              <div>
-                {event.venue_name && (
-                  <div className="font-medium">{event.venue_name}</div>
-                )}
-                <div>{event.address}</div>
-              </div>
-            </div>
-
-            {event.price_cents && (
-              <div className="text-muted-foreground">
-                <span className="font-medium">Beitrag:</span>{" "}
-                {(event.price_cents / 100).toFixed(2)} EUR
-              </div>
-            )}
-
-            {event.price_cents === null && (
-              <div className="text-primary font-medium">
-                Kostenlose Veranstaltung
-              </div>
-            )}
-          </div>
-
-          {event.registration_url && (
-            <Button asChild variant="outline" size="sm">
-              <a
-                href={event.registration_url}
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                Anmeldung / Weitere Infos →
-              </a>
-            </Button>
-          )}
-        </div>
-      </div>
-    </Card>
-  );
 
   return (
     <div className="container px-4 md:px-6 py-16 max-w-6xl">
@@ -135,7 +43,7 @@ export default async function VeranstaltungenPage() {
         )}
       </div>
 
-      {upcomingEvents.length === 0 ? (
+      {events.length === 0 ? (
         <Card className="p-8 text-center">
           <p className="text-muted-foreground">
             Aktuell sind keine Veranstaltungen geplant. Schau bald wieder
@@ -144,25 +52,86 @@ export default async function VeranstaltungenPage() {
         </Card>
       ) : (
         <div className="space-y-6">
-          {upcomingEvents.map((event) => (
-            <EventCard key={event.id} event={event} />
-          ))}
-        </div>
-      )}
+          {events.map((event) => (
+            <Card
+              key={event.id}
+              className="overflow-hidden hover:shadow-lg transition-shadow"
+            >
+              <div className="flex flex-col md:flex-row gap-6 p-6">
+                {event.image_url && (
+                  <div className="relative w-full md:w-64 h-48 flex-shrink-0 rounded-lg overflow-hidden">
+                    <Image
+                      src={event.image_url}
+                      alt={event.title}
+                      fill
+                      className="object-cover"
+                    />
+                  </div>
+                )}
+                <div className="flex-1 space-y-3">
+                  <div>
+                    <h2 className="text-2xl font-semibold mb-1">
+                      {event.title}
+                    </h2>
+                    {event.subtitle && (
+                      <p className="text-muted-foreground">{event.subtitle}</p>
+                    )}
+                  </div>
 
-      {isAuthed && pastEvents.length > 0 && (
-        <div className="mt-16">
-          <h2 className="text-3xl font-bold tracking-tighter mb-8">
-            Vergangene Veranstaltungen
-          </h2>
-          <p className="text-muted-foreground pb-4">
-            Die siehst du nur, weil du eingeloggt bist.
-          </p>
-          <div className="space-y-6">
-            {pastEvents.map((event) => (
-              <EventCard key={event.id} event={event} />
-            ))}
-          </div>
+                  <p className="text-muted-foreground leading-relaxed">
+                    {event.description}
+                  </p>
+
+                  <div className="space-y-2 text-sm">
+                    <div className="flex items-start gap-2">
+                      <Calendar className="h-4 w-4 mt-0.5 flex-shrink-0 text-primary" />
+                      <span>
+                        {new Intl.DateTimeFormat("de-DE", {
+                          dateStyle: "full",
+                        }).format(event.starts_at)}
+                        {event.time_text && ` • ${event.time_text}`}
+                      </span>
+                    </div>
+
+                    <div className="flex items-start gap-2">
+                      <MapPin className="h-4 w-4 mt-0.5 flex-shrink-0 text-primary" />
+                      <div>
+                        {event.venue_name && (
+                          <div className="font-medium">{event.venue_name}</div>
+                        )}
+                        <div>{event.address}</div>
+                      </div>
+                    </div>
+
+                    {event.price_cents && (
+                      <div className="text-muted-foreground">
+                        <span className="font-medium">Beitrag:</span>{" "}
+                        {(event.price_cents / 100).toFixed(2)} EUR
+                      </div>
+                    )}
+
+                    {event.price_cents === null && (
+                      <div className="text-primary font-medium">
+                        Kostenlose Veranstaltung
+                      </div>
+                    )}
+                  </div>
+
+                  {event.registration_url && (
+                    <Button asChild variant="outline" size="sm">
+                      <a
+                        href={event.registration_url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
+                        Anmeldung / Weitere Infos →
+                      </a>
+                    </Button>
+                  )}
+                </div>
+              </div>
+            </Card>
+          ))}
         </div>
       )}
     </div>
