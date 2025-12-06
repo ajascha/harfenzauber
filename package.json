@@ -2,9 +2,10 @@
   "private": true,
   "scripts": {
     "dev": "next dev --turbopack",
-    "build": "next build",
+    "build": "prisma migrate deploy && next build",
     "start": "next start",
     "lint": "next lint",
+    "type-check": "tsc --noEmit",
     "postinstall": "prisma generate",
     "migrate": "prisma migrate deploy",
     "migrate:dev": "prisma migrate dev",
@@ -13,7 +14,8 @@
     "seed:events": "tsx scripts/seed-events.ts",
     "seed:hfz-posts": "tsx scripts/seed-hfz-posts.ts",
     "seed:hfz-posts-md": "tsx scripts/seed-hfz-posts-from-md.ts",
-    "seed:hfz-events": "tsx scripts/seed-hfz-events.ts"
+    "seed:hfz-events": "tsx scripts/seed-hfz-events.ts",
+    "prepare": "husky"
   },
   "dependencies": {
     "@next/third-parties": "^16.0.0",
@@ -56,6 +58,7 @@
     "autoprefixer": "^10.4.20",
     "eslint": "^9",
     "eslint-config-next": "16.0.7",
+    "husky": "^9.1.7",
     "postcss": "^8",
     "prisma": "^7.1.0",
     "tailwindcss": "^3.4.1",
