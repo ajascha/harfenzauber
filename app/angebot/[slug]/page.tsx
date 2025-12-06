@@ -146,7 +146,7 @@ export default async function AngebotPage({
     <div className="flex flex-col">
       {/* Hero Section */}
       <section className="relative min-h-[400px] flex items-center justify-center bg-gradient-to-b from-secondary/30 to-background pt-16">
-        <div className="container px-4 md:px-6">
+        <div className="container mx-auto px-4 md:px-6 max-w-7xl">
           <div className="grid gap-8 lg:grid-cols-2 lg:gap-12 items-center">
             <div className="flex flex-col justify-center space-y-6">
               <h1 className="text-4xl font-bold tracking-tighter sm:text-5xl xl:text-6xl/none">
