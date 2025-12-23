@@ -36,6 +36,13 @@
   body {
     @apply bg-background text-foreground font-sans;
   }
+  html {
+    scroll-behavior: smooth;
+  }
+  /* Prevent sticky header from covering in-page anchors */
+  [id] {
+    scroll-margin-top: 4rem;
+  }
   h1, h2, h3, h4, h5, h6 {
     @apply font-heading;
   }

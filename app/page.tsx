@@ -36,7 +36,7 @@ export default async function HomePage() {
               </p>
               <div className="flex flex-col gap-3 sm:flex-row">
                 <Button asChild size="lg">
-                  <Link href="/kontakt">Kontakt aufnehmen</Link>
+                  <a href="#kontakt">Kontakt aufnehmen</a>
                 </Button>
                 <Button asChild variant="outline" size="lg">
                   <Link href="#angebote">Mehr erfahren</Link>
@@ -137,25 +137,26 @@ export default async function HomePage() {
         </div>
       </section>
 
-      {/* Über mich Section */}
-      <section className="py-16 md:py-24 bg-muted/30">
-        <div className="container mx-auto px-4 md:px-6 w-full max-w-4xl">
-          <div className="text-center space-y-4">
-            <p className="text-lg md:text-xl text-muted-foreground">
-              Musik kann heilsam sein – manchmal braucht es auch Worte. Auf{" "}
-              <Link
-                href="https://lorena-wolfewicz.de"
-                target="_blank"
-                className="text-primary hover:underline font-medium"
-              >
-                lorena-wolfewicz
-              </Link>{" "}
-              erfährst du mehr über therapeutische Arbeit.
+      {/* Cross-promotion callout */}
+      <section className="py-12 md:py-16">
+        <div className="container mx-auto px-4 md:px-6 w-full max-w-2xl">
+          <Card className="bg-secondary/10 border-secondary/30 p-6 md:p-8 text-center">
+            <p className="text-sm text-muted-foreground/70 uppercase tracking-wide mb-2">
+              Mehr von Lorena
             </p>
-            <Button asChild variant="outline" size="lg">
-              <Link href="/ueber-mich">Mehr über mich</Link>
+            <p className="text-base text-muted-foreground mb-4">
+              Musik kann heilsam sein – manchmal braucht es auch Worte.
+            </p>
+            <Button asChild variant="outline" size="sm">
+              <a
+                href="https://lorena-wolfewicz.de?utm_source=harfenzauber&utm_medium=website&utm_campaign=cross-promo"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                Therapeutische Arbeit entdecken
+              </a>
             </Button>
-          </div>
+          </Card>
         </div>
       </section>
 
