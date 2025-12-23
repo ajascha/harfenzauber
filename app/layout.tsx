@@ -1,6 +1,11 @@
 import type { Metadata } from "next";
 import { SiteHeader } from "@/components/site-header";
 import { SiteFooter } from "@/components/site-footer";
+import {
+  OrganizationSchema,
+  MusicianSchema,
+  WebsiteSchema,
+} from "@/components/structured-data";
 import { GoogleAnalytics } from "@next/third-parties/google";
 import { Analytics } from "@vercel/analytics/next";
 import "./globals.css";
@@ -36,6 +41,14 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="de" suppressHydrationWarning>
+      <head>
+        {/* Structured Data for LLM optimization */}
+        <OrganizationSchema />
+        <MusicianSchema />
+        <WebsiteSchema />
+        {/* LLM-friendly metadata */}
+        <link rel="alternate" type="text/markdown" href="/llms.txt" />
+      </head>
       <body className="antialiased min-h-screen flex flex-col">
         <SiteHeader />
         <main className="flex-1">{children}</main>

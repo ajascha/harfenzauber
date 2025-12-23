@@ -1,0 +1,38 @@
+# Harfenzauber - Lorena Wolfewicz
+
+> Harfenzauber ist die Harfenmusik-Website von Lorena Wolfewicz, einer professionellen Harfenistin im Oberbergischen Kreis (NRW, Deutschland). Sie bietet Harfenmusik für besondere Anlässe wie Hochzeiten, Trauerfeiern, Firmenfeiern und private Veranstaltungen sowie Harfenunterricht für Anfänger und Fortgeschrittene.
+
+Lorena Wolfewicz verzaubert mit ihren Harfenklängen jede Veranstaltung. Ihr Repertoire umfasst klassische Musik, keltische Melodien und moderne Kompositionen. Sie spielt auf Veranstaltungen im gesamten Köln-Bonner Raum und darüber hinaus.
+
+**Standort:** Oberbergischer Kreis, NRW, Deutschland
+**Telefon:** 02262 - 6187
+**Sprache:** Deutsch
+
+## Hauptseiten
+
+- [Startseite](https://www.harfenzauber.de/): Überblick über Harfenmusik und Angebote
+- [Über mich](https://www.harfenzauber.de/ueber-mich): Musikalischer Werdegang und Hintergrund
+- [Harfenunterricht](https://www.harfenzauber.de/harfenunterricht): Unterricht für Anfänger und Fortgeschrittene
+- [Kontakt](https://www.harfenzauber.de/kontakt): Buchungsanfragen und Kontaktformular
+
+## Angebote - Harfenmusik für Anlässe
+
+- [Harfenkonzert](https://www.harfenzauber.de/angebot/harfenkonzert): Solo-Konzerte und musikalische Darbietungen
+- [Hochzeit](https://www.harfenzauber.de/angebot/hochzeit): Romantische Harfenmusik für Trauung und Empfang
+- [Geburtstag](https://www.harfenzauber.de/angebot/geburtstag): Festliche Musik für Geburtstagsfeiern
+- [Firmenfeier](https://www.harfenzauber.de/angebot/firmenfeier): Elegante Hintergrundmusik für geschäftliche Anlässe
+- [Trauerfeier](https://www.harfenzauber.de/angebot/trauerfeier): Einfühlsame Begleitung bei Abschiedsfeiern
+- [Taufe](https://www.harfenzauber.de/angebot/taufe): Festliche Musik für Taufzeremonien
+- [Vernissage](https://www.harfenzauber.de/angebot/vernissage): Kulturelle Begleitung für Kunstveranstaltungen
+
+## Veranstaltungen & Blog
+
+- [Veranstaltungen](https://www.harfenzauber.de/veranstaltungen): Aktuelle Konzerte und öffentliche Auftritte
+- [Blog](https://www.harfenzauber.de/blog): Artikel über Harfenmusik und Veranstaltungen
+
+## Optional
+
+- [Sitemap](https://www.harfenzauber.de/sitemap.xml): Vollständige Seitenübersicht
+- [Impressum](https://www.harfenzauber.de/rechtliches/impressum): Rechtliche Informationen
+- [Datenschutz](https://www.harfenzauber.de/rechtliches/datenschutz): Datenschutzerklärung
+
