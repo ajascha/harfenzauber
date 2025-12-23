@@ -11,37 +11,12 @@ export default function robots(): MetadataRoute.Robots {
   return {
     rules: [
       {
+        // Wide open for all crawlers including AI (search + training)
         userAgent: "*",
         allow: "/",
-        disallow: ["/api/", "/dashboard/", "/protected/", "/login/"],
-      },
-      // Explicitly allow AI crawlers for LLM optimization
-      {
-        userAgent: "GPTBot",
-        allow: "/",
-      },
-      {
-        userAgent: "ChatGPT-User",
-        allow: "/",
-      },
-      {
-        userAgent: "ClaudeBot",
-        allow: "/",
-      },
-      {
-        userAgent: "anthropic-ai",
-        allow: "/",
-      },
-      {
-        userAgent: "PerplexityBot",
-        allow: "/",
-      },
-      {
-        userAgent: "Google-Extended",
-        allow: "/",
+        disallow: ["/api/", "/dashboard/", "/protected/", "/login/", "/auth/"],
       },
     ],
     sitemap: `${base}/sitemap.xml`,
   };
 }
-

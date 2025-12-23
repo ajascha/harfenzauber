@@ -1,6 +1,9 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
+  // Ensure AI crawlers that don't execute JavaScript get complete HTML
+  htmlLimitedBots:
+    /Googlebot|Bingbot|GPTBot|ClaudeBot|PerplexityBot|ChatGPT-User|OAI-SearchBot|anthropic-ai|CCBot|Meta-ExternalAgent/i,
   images: {
     remotePatterns: [
       {

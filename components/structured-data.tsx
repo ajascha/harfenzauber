@@ -293,3 +293,49 @@ export function BreadcrumbSchema({
   );
 }
 
+export function ArticleSchema({
+  title,
+  description,
+  url,
+  imageUrl,
+  publishedAt,
+  modifiedAt,
+  authorName = "Lorena Wolfewicz",
+}: {
+  title: string;
+  description: string;
+  url: string;
+  imageUrl?: string;
+  publishedAt: string; // ISO 8601: "2025-12-23T10:00:00+01:00"
+  modifiedAt?: string;
+  authorName?: string;
+}) {
+  const schema = {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    headline: title,
+    description,
+    inLanguage: "de-DE",
+    url,
+    image: imageUrl,
+    datePublished: publishedAt,
+    dateModified: modifiedAt || publishedAt,
+    author: {
+      "@type": "Person",
+      name: authorName,
+      url: "https://www.harfenzauber.de/ueber-mich",
+    },
+    publisher: {
+      "@id": "https://www.harfenzauber.de/#organization",
+    },
+    mainEntityOfPage: { "@type": "WebPage", "@id": url },
+  };
+
+  return (
+    <script
+      type="application/ld+json"
+      dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }}
+    />
+  );
+}
+

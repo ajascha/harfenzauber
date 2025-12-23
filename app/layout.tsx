@@ -42,6 +42,10 @@ export default function RootLayout({
   return (
     <html lang="de" suppressHydrationWarning>
       <head>
+        {/* Language and regional targeting for Bing/ChatGPT */}
+        <meta httpEquiv="content-language" content="de-DE" />
+        <link rel="alternate" hrefLang="de-DE" href="https://www.harfenzauber.de" />
+        <link rel="alternate" hrefLang="x-default" href="https://www.harfenzauber.de" />
         {/* Structured Data for LLM optimization */}
         <OrganizationSchema />
         <MusicianSchema />
