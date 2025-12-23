@@ -1,5 +1,6 @@
 import type { MetadataRoute } from "next";
 import { prisma } from "@/lib/db";
+import { toSlug } from "@/lib/utils";
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const base =
@@ -21,6 +22,9 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     { path: "veranstaltungen", priority: 0.8, changeFrequency: "weekly" as const },
     { path: "rechtliches/impressum", priority: 0.3, changeFrequency: "yearly" as const },
     { path: "rechtliches/datenschutz", priority: 0.3, changeFrequency: "yearly" as const },
+    { path: "preise", priority: 0.6, changeFrequency: "monthly" as const },
+    { path: "repertoire", priority: 0.6, changeFrequency: "monthly" as const },
+    { path: "faq", priority: 0.6, changeFrequency: "monthly" as const },
   ];
 
   // Service pages (Angebote)
@@ -46,6 +50,20 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     // Database might not be available during build
   }
 
+  // Dynamic events from database
+  let eventSlugs: { slug: string; created_at: Date | null }[] = [];
+  try {
+    const events = await prisma.hfzEvent.findMany({
+      select: { title: true, created_at: true },
+    });
+    eventSlugs = events.map((e) => ({
+      slug: toSlug(e.title),
+      created_at: e.created_at,
+    }));
+  } catch {
+    // Database might not be available during build
+  }
+
   return [
     // Static pages
     ...staticPages.map((page) => ({
@@ -67,6 +85,13 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       lastModified: post.created_at || now,
       changeFrequency: "monthly" as const,
       priority: 0.6,
+    })),
+    // Events
+    ...eventSlugs.map((event) => ({
+      url: `${base}/veranstaltungen/${event.slug}`,
+      lastModified: event.created_at || now,
+      changeFrequency: "weekly" as const,
+      priority: 0.7,
     })),
   ];
 }

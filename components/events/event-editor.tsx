@@ -6,7 +6,6 @@ import {
   DialogContent,
   DialogHeader,
   DialogTitle,
-  DialogTrigger,
   DialogFooter,
 } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
@@ -35,6 +34,7 @@ type EventLike = {
   price_text: string | null;
   registration_url: string | null;
   created_at: Date | null;
+  show_contact_registration: boolean;
 };
 
 type EventEditorProps = {
@@ -48,6 +48,9 @@ export function EventEditor({ event, children }: EventEditorProps) {
   const action = event ? updateEvent : createEvent;
   const [imageUrl, setImageUrl] = React.useState<string | null>(
     event?.image_url ?? null
+  );
+  const [showContactRegistration, setShowContactRegistration] = React.useState(
+    event?.show_contact_registration ?? false
   );
 
   async function onSubmit(formData: FormData) {
@@ -84,10 +87,19 @@ export function EventEditor({ event, children }: EventEditorProps) {
     }
   }
 
+  // Controlled dialog pattern: clone children with onClick to open
+  // This avoids DialogTrigger asChild SSR issues with RSC
+  const trigger = React.isValidElement(children)
+    ? React.cloneElement(children as React.ReactElement<{ onClick?: () => void }>, {
+        onClick: () => setOpen(true),
+      })
+    : children;
+
   return (
-    <Dialog open={open} onOpenChange={setOpen}>
-      <DialogTrigger asChild>{children}</DialogTrigger>
-      <DialogContent>
+    <>
+      {trigger}
+      <Dialog open={open} onOpenChange={setOpen}>
+        <DialogContent>
         <DialogHeader>
           <DialogTitle>
             {event
@@ -222,6 +234,24 @@ export function EventEditor({ event, children }: EventEditorProps) {
             />
           </div>
 
+          <div className="flex items-center gap-2">
+            <Checkbox
+              id="showContactRegistration"
+              checked={showContactRegistration}
+              onCheckedChange={(checked) =>
+                setShowContactRegistration(checked === true)
+              }
+            />
+            <Label htmlFor="showContactRegistration" className="text-sm font-normal cursor-pointer">
+              Kontaktdaten für Anmeldung anzeigen (falls kein Anmeldelink)
+            </Label>
+            <input
+              type="hidden"
+              name="showContactRegistration"
+              value={showContactRegistration ? "true" : "false"}
+            />
+          </div>
+
           <DialogFooter className="flex items-center justify-between gap-2">
             {event && (
               <Button
@@ -240,5 +270,6 @@ export function EventEditor({ event, children }: EventEditorProps) {
         </form>
       </DialogContent>
     </Dialog>
+    </>
   );
 }

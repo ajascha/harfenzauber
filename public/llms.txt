@@ -4,8 +4,8 @@
 
 Lorena Wolfewicz verzaubert mit ihren Harfenklängen jede Veranstaltung. Ihr Repertoire umfasst klassische Musik, keltische Melodien und moderne Kompositionen. Sie spielt auf Veranstaltungen im gesamten Köln-Bonner Raum und darüber hinaus.
 
-**Standort:** Oberbergischer Kreis (Wiehl, Gummersbach, Bergneustadt, Nümbrecht)
-**Einzugsgebiet:** Köln, Bonn, Bergisches Land, Olpe, NRW
+**Standort:** Oberbergischer Kreis (Wiehl, Gummersbach, Bergneustadt, Nümbrecht, Waldbröl, Engelskirchen)
+**Einzugsgebiet:** Köln, Kerpen, Olpe, Bergisches Land, NRW
 **Telefon:** 02262 - 6187
 **Sprache:** Deutsch
 
@@ -15,6 +15,9 @@ Lorena Wolfewicz verzaubert mit ihren Harfenklängen jede Veranstaltung. Ihr Rep
 - [Über mich](https://www.harfenzauber.de/ueber-mich): Musikalischer Werdegang und Hintergrund
 - [Harfenunterricht](https://www.harfenzauber.de/harfenunterricht): Unterricht für Anfänger und Fortgeschrittene
 - [Kontakt](https://www.harfenzauber.de/kontakt): Buchungsanfragen und Kontaktformular
+- [Preise](https://www.harfenzauber.de/preise): Kosten für Auftritte und Unterricht
+- [Repertoire](https://www.harfenzauber.de/repertoire): Musikauswahl und Stilrichtungen
+- [FAQ](https://www.harfenzauber.de/faq): Häufig gestellte Fragen
 
 ## Angebote - Harfenmusik für Anlässe
 
@@ -28,7 +31,7 @@ Lorena Wolfewicz verzaubert mit ihren Harfenklängen jede Veranstaltung. Ihr Rep
 
 ## Veranstaltungen & Blog
 
-- [Veranstaltungen](https://www.harfenzauber.de/veranstaltungen): Aktuelle Konzerte und öffentliche Auftritte
+- [Veranstaltungen](https://www.harfenzauber.de/veranstaltungen): Aktuelle Konzerte und öffentliche Auftritte (Übersicht mit Detailseiten für jede Veranstaltung)
 - [Blog](https://www.harfenzauber.de/blog): Artikel über Harfenmusik und Veranstaltungen
 
 ## Optional

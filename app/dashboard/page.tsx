@@ -9,40 +9,25 @@ import { Calendar, MapPin } from "lucide-react";
 
 export const dynamic = "force-dynamic";
 
-export default async function DashboardPage() {
-  const supabase = await createClient();
-  const { data } = await supabase.auth.getClaims();
+type HfzEventType = {
+  id: number;
+  title: string;
+  subtitle: string | null;
+  description: string;
+  image_url: string | null;
+  starts_at: Date;
+  address: string;
+  venue_name: string | null;
+  time_text: string | null;
+  price_text: string | null;
+  registration_url: string | null;
+  created_at: Date | null;
+  show_contact_registration: boolean;
+};
 
-  if (!data?.claims) {
-    redirect("/login");
-  }
-
-  const now = new Date();
-  const upcomingEvents = await prisma.hfzEvent.findMany({
-    where: {
-      starts_at: {
-        gte: now,
-      },
-    },
-    orderBy: { starts_at: "asc" },
-  });
-
-  const pastEvents = await prisma.hfzEvent.findMany({
-    where: {
-      starts_at: {
-        lt: now,
-      },
-    },
-    orderBy: { starts_at: "desc" },
-  });
-
-  type HfzEvent = (typeof upcomingEvents)[0] | (typeof pastEvents)[0];
-
-  const EventCard = ({ event }: { event: HfzEvent }) => (
-    <Card
-      key={event.id}
-      className="overflow-hidden hover:shadow-lg transition-shadow"
-    >
+function EventCard({ event }: { event: HfzEventType }) {
+  return (
+    <Card className="overflow-hidden hover:shadow-lg transition-shadow">
       <div className="flex flex-col md:flex-row gap-6 p-6">
         {event.image_url && (
           <div className="relative w-full md:w-48 h-32 flex-shrink-0 rounded-lg overflow-hidden">
@@ -82,7 +67,7 @@ export default async function DashboardPage() {
           </div>
         </div>
 
-        <div className="flex md:flex-col gap-2">
+        <div className="flex md:flex-col gap-2 flex-shrink-0">
           <EventEditor event={event}>
             <Button variant="outline" size="sm">
               Bearbeiten
@@ -92,6 +77,34 @@ export default async function DashboardPage() {
       </div>
     </Card>
   );
+}
+
+export default async function DashboardPage() {
+  const supabase = await createClient();
+  const { data } = await supabase.auth.getClaims();
+
+  if (!data?.claims) {
+    redirect("/login");
+  }
+
+  const now = new Date();
+  const upcomingEvents = await prisma.hfzEvent.findMany({
+    where: {
+      starts_at: {
+        gte: now,
+      },
+    },
+    orderBy: { starts_at: "asc" },
+  });
+
+  const pastEvents = await prisma.hfzEvent.findMany({
+    where: {
+      starts_at: {
+        lt: now,
+      },
+    },
+    orderBy: { starts_at: "desc" },
+  });
 
   return (
     <div className="container px-4 md:px-6 py-16 max-w-6xl">

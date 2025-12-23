@@ -37,3 +37,47 @@ export function truncate(text: string, maxLength: number): string {
   if (text.length <= maxLength) return text;
   return text.slice(0, Math.max(0, maxLength - 1)).trimEnd() + "…";
 }
+
+/**
+ * Normalize price text to a consistent format.
+ * Detects patterns like "50 euro", "50 EUR", "50 Eur", "50€", etc.
+ * and normalizes to "50 €" format.
+ * Non-numeric prices (like "Auf Spendenbasis") are returned as-is.
+ */
+export function formatPrice(priceText: string | null | undefined): string | null {
+  if (!priceText) return null;
+  
+  const trimmed = priceText.trim();
+  if (!trimmed) return null;
+
+  // Match patterns: number (with optional decimals) followed by EUR/euro/Eur/€
+  // Also handles: EUR 50, € 50, euro 50, etc.
+  const eurVariations = /\b(eur|euro|€)\b/gi;
+  
+  // Check if the text contains any EUR variation
+  if (!eurVariations.test(trimmed)) {
+    // No EUR found, return as-is (could be "Auf Spendenbasis", "Kostenlos", etc.)
+    return trimmed;
+  }
+
+  // Extract numbers (including decimals with , or .)
+  const numberMatch = trimmed.match(/(\d+(?:[.,]\d{1,2})?)/);
+  if (!numberMatch) {
+    // Has EUR but no number - return as-is
+    return trimmed;
+  }
+
+  const numericValue = numberMatch[1].replace(",", ".");
+  const num = parseFloat(numericValue);
+  
+  if (isNaN(num)) {
+    return trimmed;
+  }
+
+  // Format: use comma as decimal separator for German locale
+  const formatted = num % 1 === 0 
+    ? num.toString() 
+    : num.toFixed(2).replace(".", ",");
+  
+  return `${formatted} €`;
+}

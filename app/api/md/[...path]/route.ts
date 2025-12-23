@@ -1,5 +1,16 @@
 import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/db";
+import { toSlug, formatPrice } from "@/lib/utils";
+
+// Escape strings for YAML front matter (handles colons, quotes, newlines)
+function yamlEscape(str: string): string {
+  if (!str) return '""';
+  // If string contains special chars, wrap in double quotes and escape internal quotes
+  if (/[:\n"'#\[\]{}|>&*!?@`]/.test(str) || str.startsWith("-") || str.startsWith(" ")) {
+    return `"${str.replace(/\\/g, "\\\\").replace(/"/g, '\\"').replace(/\n/g, "\\n")}"`;
+  }
+  return str;
+}
 
 // Markdown content for static pages
 const staticPages: Record<string, { title: string; content: string }> = {
@@ -172,7 +183,7 @@ export async function GET(
   if (staticPages[pagePath]) {
     const page = staticPages[pagePath];
     const markdown = `---
-title: ${page.title}
+title: ${yamlEscape(page.title)}
 url: https://www.harfenzauber.de/${pagePath}
 lastModified: ${new Date().toISOString()}
 ---
@@ -193,7 +204,7 @@ ${page.content}`;
     if (servicePages[slug]) {
       const page = servicePages[slug];
       const markdown = `---
-title: ${page.title}
+title: ${yamlEscape(page.title)}
 url: https://www.harfenzauber.de/angebot/${slug}
 lastModified: ${new Date().toISOString()}
 ---
@@ -216,7 +227,7 @@ ${page.content}`;
       const post = await prisma.hfzPost.findUnique({ where: { slug } });
       if (post) {
         const markdown = `---
-title: ${post.title}
+title: ${yamlEscape(post.title)}
 url: https://www.harfenzauber.de/blog/${slug}
 lastModified: ${post.created_at?.toISOString() || new Date().toISOString()}
 ---
@@ -224,6 +235,59 @@ lastModified: ${post.created_at?.toISOString() || new Date().toISOString()}
 # ${post.title}
 
 ${post.content || ""}
+`;
+        return new NextResponse(markdown, {
+          headers: {
+            "Content-Type": "text/markdown; charset=utf-8",
+            "Cache-Control": "public, max-age=3600, s-maxage=86400",
+          },
+        });
+      }
+    } catch {
+      // Database error
+    }
+  }
+
+  // Handle event detail pages
+  if (pagePath.startsWith("veranstaltungen/")) {
+    const slug = pagePath.replace("veranstaltungen/", "");
+    try {
+      const events = await prisma.hfzEvent.findMany();
+      const event = events.find((ev) => toSlug(ev.title) === slug);
+      if (event) {
+        const dateStr = new Intl.DateTimeFormat("de-DE", {
+          weekday: "long",
+          day: "numeric",
+          month: "long",
+          year: "numeric",
+        }).format(event.starts_at);
+        const priceStr = formatPrice(event.price_text);
+        
+        const markdown = `---
+title: ${yamlEscape(event.title + " - Harfenzauber")}
+url: https://www.harfenzauber.de/veranstaltungen/${slug}
+lastModified: ${event.created_at?.toISOString() || new Date().toISOString()}
+---
+
+# ${event.title}
+
+${event.subtitle ? `**${event.subtitle}**\n\n` : ""}
+
+## Details
+
+- **Datum:** ${dateStr}${event.time_text ? ` · ${event.time_text}` : ""}
+- **Ort:** ${event.address}${event.venue_name ? `, ${event.venue_name}` : ""}
+${priceStr ? `- **Preis:** ${priceStr}` : ""}
+
+## Beschreibung
+
+${event.description}
+
+## Kontakt
+
+Für Anmeldung und weitere Informationen:
+- Telefon: 02262 - 6187
+- E-Mail: info@harfenzauber.de
 `;
         return new NextResponse(markdown, {
           headers: {

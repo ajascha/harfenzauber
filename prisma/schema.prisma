@@ -17,18 +17,19 @@ model HfzPost {
 }
 
 model HfzEvent {
-  id               Int       @id @default(autoincrement())
-  title            String
-  description      String
-  image_url        String?
-  starts_at        DateTime  @db.Date
-  address          String
-  price_text       String?
-  created_at       DateTime? @default(now()) @db.Timestamp(6)
-  registration_url String?
-  subtitle         String?
-  time_text        String?
-  venue_name       String?
+  id                        Int       @id @default(autoincrement())
+  title                     String
+  description               String
+  image_url                 String?
+  starts_at                 DateTime  @db.Date
+  address                   String
+  price_text                String?
+  created_at                DateTime? @default(now()) @db.Timestamp(6)
+  registration_url          String?
+  subtitle                  String?
+  time_text                 String?
+  venue_name                String?
+  show_contact_registration Boolean   @default(false)
 
   @@map("hfz_events")
 }

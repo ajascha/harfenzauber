@@ -4,9 +4,10 @@ import Image from "next/image";
 import { prisma } from "@/lib/db";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Calendar, MapPin } from "lucide-react";
+import { Calendar, MapPin, Euro } from "lucide-react";
 import { createClient } from "@/lib/supabase/server";
 import { EventEditor } from "@/components/events/event-editor";
+import { toSlug, formatPrice } from "@/lib/utils";
 
 export const dynamic = "force-dynamic";
 
@@ -94,6 +95,7 @@ export default async function VeranstaltungenPage() {
                           price_text: event.price_text,
                           registration_url: event.registration_url,
                           created_at: event.created_at,
+                          show_contact_registration: event.show_contact_registration,
                         }}
                       >
                         <Button variant="outline" size="sm">
@@ -107,52 +109,45 @@ export default async function VeranstaltungenPage() {
                     {event.description}
                   </p>
 
-                  <div className="space-y-2 text-sm">
-                    <div className="flex items-start gap-2">
-                      <Calendar className="h-4 w-4 mt-0.5 flex-shrink-0 text-primary" />
+                  {/* Meta info - aligned with lorena-wolfewicz style */}
+                  <div className="mt-4 pt-4 border-t border-neutral-100 space-y-1.5 text-sm text-neutral-600">
+                    <div className="flex items-center gap-2">
+                      <Calendar className="h-4 w-4 text-neutral-400" />
                       <span>
                         {new Intl.DateTimeFormat("de-DE", {
-                          dateStyle: "full",
+                          weekday: "long",
+                          day: "numeric",
+                          month: "long",
+                          year: "numeric",
                         }).format(event.starts_at)}
-                        {event.time_text && ` • ${event.time_text}`}
+                        {event.time_text && ` · ${event.time_text}`}
                       </span>
                     </div>
 
-                    <div className="flex items-start gap-2">
-                      <MapPin className="h-4 w-4 mt-0.5 flex-shrink-0 text-primary" />
-                      <div>
-                        {event.venue_name && (
-                          <div className="font-medium">{event.venue_name}</div>
-                        )}
-                        <div>{event.address}</div>
-                      </div>
+                    <div className="flex items-center gap-2">
+                      <MapPin className="h-4 w-4 text-neutral-400" />
+                      <span>
+                        {event.address}
+                        {event.venue_name && `, ${event.venue_name}`}
+                      </span>
                     </div>
 
-                    {event.price_text && (
-                      <div className="text-muted-foreground">
-                        <span className="font-medium">Beitrag:</span>{" "}
-                        {event.price_text}
-                      </div>
-                    )}
-
-                    {!event.price_text && (
-                      <div className="text-primary font-medium">
-                        Kostenlose Veranstaltung
+                    {formatPrice(event.price_text) && (
+                      <div className="flex items-center gap-2">
+                        <Euro className="h-4 w-4 text-neutral-400" />
+                        <span>{formatPrice(event.price_text)}</span>
                       </div>
                     )}
                   </div>
 
-                  {event.registration_url && (
-                    <Button asChild variant="outline" size="sm">
-                      <a
-                        href={event.registration_url}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                      >
-                        Anmeldung / Weitere Infos →
-                      </a>
+                  {/* CTA */}
+                  <div className="mt-4">
+                    <Button asChild variant="link" className="px-0 text-primary h-auto">
+                      <Link href={`/veranstaltungen/${toSlug(event.title)}`}>
+                        Details & Anmeldung →
+                      </Link>
                     </Button>
-                  )}
+                  </div>
                 </div>
               </div>
             </Card>

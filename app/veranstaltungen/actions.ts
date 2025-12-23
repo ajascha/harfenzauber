@@ -29,6 +29,7 @@ export async function createEvent(formData: FormData) {
   const timeText = (formData.get("timeText") as string) || null;
   const priceText = ((formData.get("priceText") as string) || "").trim() || null;
   const registrationUrl = (formData.get("registrationUrl") as string) || null;
+  const showContactRegistration = formData.get("showContactRegistration") === "true";
 
   const startsAt = new Date(startsAtStr);
   const slug = slugify(title);
@@ -45,6 +46,7 @@ export async function createEvent(formData: FormData) {
       time_text: timeText,
       price_text: priceText,
       registration_url: registrationUrl,
+      show_contact_registration: showContactRegistration,
     },
   });
 
@@ -71,6 +73,7 @@ export async function updateEvent(formData: FormData) {
   const timeText = (formData.get("timeText") as string) || null;
   const priceText = ((formData.get("priceText") as string) || "").trim() || null;
   const registrationUrl = (formData.get("registrationUrl") as string) || null;
+  const showContactRegistration = formData.get("showContactRegistration") === "true";
 
   const startsAt = new Date(startsAtStr);
   const slug = slugify(title);
@@ -88,6 +91,7 @@ export async function updateEvent(formData: FormData) {
       time_text: timeText,
       price_text: priceText,
       registration_url: registrationUrl,
+      show_contact_registration: showContactRegistration,
     },
   });
 

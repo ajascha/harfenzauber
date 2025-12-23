@@ -24,9 +24,18 @@ export function OrganizationSchema() {
       longitude: "7.5",
     },
     areaServed: [
+      // Primary: Oberbergischer Kreis
+      { "@type": "City", name: "Bergneustadt" },
+      { "@type": "City", name: "Gummersbach" },
+      { "@type": "City", name: "Wiehl" },
+      { "@type": "City", name: "Nümbrecht" },
+      { "@type": "City", name: "Waldbröl" },
+      { "@type": "City", name: "Engelskirchen" },
       { "@type": "AdministrativeArea", name: "Oberbergischer Kreis" },
-      { "@type": "AdministrativeArea", name: "Köln" },
-      { "@type": "AdministrativeArea", name: "Bonn" },
+      // Secondary
+      { "@type": "City", name: "Köln" },
+      { "@type": "City", name: "Kerpen" },
+      { "@type": "City", name: "Olpe" },
       { "@type": "AdministrativeArea", name: "Bergisches Land" },
       { "@type": "AdministrativeArea", name: "Nordrhein-Westfalen" },
     ],
@@ -140,9 +149,18 @@ export function MusicServiceSchema({
       "@id": "https://www.harfenzauber.de/#organization",
     },
     areaServed: [
-      { "@type": "AdministrativeArea", name: "Köln" },
-      { "@type": "AdministrativeArea", name: "Bonn" },
+      // Primary: Oberbergischer Kreis
+      { "@type": "City", name: "Bergneustadt" },
+      { "@type": "City", name: "Gummersbach" },
+      { "@type": "City", name: "Wiehl" },
+      { "@type": "City", name: "Nümbrecht" },
+      { "@type": "City", name: "Waldbröl" },
+      { "@type": "City", name: "Engelskirchen" },
       { "@type": "AdministrativeArea", name: "Oberbergischer Kreis" },
+      // Secondary
+      { "@type": "City", name: "Köln" },
+      { "@type": "City", name: "Kerpen" },
+      { "@type": "City", name: "Olpe" },
       { "@type": "AdministrativeArea", name: "Bergisches Land" },
     ],
     serviceType: "Live-Musik",
