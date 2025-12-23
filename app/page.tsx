@@ -137,6 +137,28 @@ export default async function HomePage() {
         </div>
       </section>
 
+      {/* Über mich Section */}
+      <section className="py-16 md:py-24 bg-muted/30">
+        <div className="container mx-auto px-4 md:px-6 w-full max-w-4xl">
+          <div className="text-center space-y-4">
+            <p className="text-lg md:text-xl text-muted-foreground">
+              Musik kann heilsam sein – manchmal braucht es auch Worte. Auf{" "}
+              <Link
+                href="https://lorena-wolfewicz.de"
+                target="_blank"
+                className="text-primary hover:underline font-medium"
+              >
+                lorena-wolfewicz
+              </Link>{" "}
+              erfährst du mehr über therapeutische Arbeit.
+            </p>
+            <Button asChild variant="outline" size="lg">
+              <Link href="/ueber-mich">Mehr über mich</Link>
+            </Button>
+          </div>
+        </div>
+      </section>
+
       {/* Upcoming Events */}
       {upcomingEvents.length > 0 && (
         <section className="py-16 md:py-24">

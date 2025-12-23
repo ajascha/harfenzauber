@@ -6,6 +6,7 @@ import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Calendar, MapPin } from "lucide-react";
 import { createClient } from "@/lib/supabase/server";
+import { EventEditor } from "@/components/events/event-editor";
 
 export const dynamic = "force-dynamic";
 
@@ -69,12 +70,36 @@ export default async function VeranstaltungenPage() {
                   </div>
                 )}
                 <div className="flex-1 space-y-3">
-                  <div>
-                    <h2 className="text-2xl font-semibold mb-1">
-                      {event.title}
-                    </h2>
-                    {event.subtitle && (
-                      <p className="text-muted-foreground">{event.subtitle}</p>
+                  <div className="flex items-start justify-between gap-2">
+                    <div>
+                      <h2 className="text-2xl font-semibold mb-1">
+                        {event.title}
+                      </h2>
+                      {event.subtitle && (
+                        <p className="text-muted-foreground">{event.subtitle}</p>
+                      )}
+                    </div>
+                    {isAuthed && (
+                      <EventEditor
+                        event={{
+                          id: event.id,
+                          title: event.title,
+                          subtitle: event.subtitle,
+                          description: event.description,
+                          image_url: event.image_url,
+                          starts_at: event.starts_at,
+                          address: event.address,
+                          venue_name: event.venue_name,
+                          time_text: event.time_text,
+                          price_text: event.price_text,
+                          registration_url: event.registration_url,
+                          created_at: event.created_at,
+                        }}
+                      >
+                        <Button variant="outline" size="sm">
+                          Bearbeiten
+                        </Button>
+                      </EventEditor>
                     )}
                   </div>
 

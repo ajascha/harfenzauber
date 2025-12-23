@@ -123,7 +123,7 @@ export function SiteFooter() {
                   <Instagram className="h-5 w-5" />
                 </a>
                 <a
-                  href="https://www.facebook.com/profile.php?id=61554146841210"
+                  href="https://www.facebook.com/people/Harfenzauber-Lorena-Wolfewicz/61554146841210/"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="transition-colors hover:text-primary"
@@ -157,4 +157,3 @@ export function SiteFooter() {
     </footer>
   );
 }
-
