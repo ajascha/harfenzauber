@@ -43,9 +43,7 @@ function EventCard({ event }: { event: HfzEventType }) {
           <div>
             <h2 className="text-xl font-semibold">{event.title}</h2>
             {event.subtitle && (
-              <p className="text-sm text-muted-foreground">
-                {event.subtitle}
-              </p>
+              <p className="text-sm text-muted-foreground">{event.subtitle}</p>
             )}
           </div>
 

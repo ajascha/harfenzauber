@@ -29,24 +29,26 @@ model HfzEvent {
   subtitle                  String?
   time_text                 String?
   venue_name                String?
-  show_contact_registration Boolean   @default(false)
+  show_contact_registration Boolean   @default(false) @map("showContactRegistration")
 
   @@map("hfz_events")
 }
 
+// Legacy tables (shared with lorena-wolfewicz or older schema)
 model events {
-  id              Int      @id @default(autoincrement())
-  title           String
-  description     String
-  imageUrl        String?
-  startsAt        DateTime @db.Date
-  address         String
-  priceCents      Int?
-  createdAt       DateTime @default(now())
-  registrationUrl String?
-  subtitle        String?
-  timeText        String?
-  venueName       String?
+  id                      Int      @id @default(autoincrement())
+  title                   String
+  description             String
+  imageUrl                String?
+  startsAt                DateTime @db.Date
+  address                 String
+  createdAt               DateTime @default(now())
+  registrationUrl         String?
+  subtitle                String?
+  timeText                String?
+  venueName               String?
+  priceText               String?
+  showContactRegistration Boolean  @default(false)
 }
 
 model posts {
@@ -55,4 +57,18 @@ model posts {
   content   String?
   createdAt DateTime @default(now())
   slug      String?  @unique
+}
+
+model pricing {
+  id          Int       @id @default(autoincrement())
+  key         String
+  value       Decimal   @db.Decimal(10, 2)
+  currency    String    @default("EUR")
+  description String?
+  validFrom   DateTime  @default(now())
+  validUntil  DateTime?
+  createdAt   DateTime  @default(now())
+  createdBy   String?
+
+  @@index([key, validFrom])
 }
