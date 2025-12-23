@@ -41,7 +41,7 @@
   }
   /* Prevent sticky header from covering in-page anchors */
   [id] {
-    scroll-margin-top: 4rem;
+    scroll-margin-top: 5rem;
   }
   h1, h2, h3, h4, h5, h6 {
     @apply font-heading;

@@ -23,18 +23,17 @@ model HfzEvent {
   image_url                 String?
   starts_at                 DateTime  @db.Date
   address                   String
-  price_text                String?
   created_at                DateTime? @default(now()) @db.Timestamp(6)
   registration_url          String?
   subtitle                  String?
   time_text                 String?
   venue_name                String?
+  price_text                String?
   show_contact_registration Boolean   @default(false) @map("showContactRegistration")
 
   @@map("hfz_events")
 }
 
-// Legacy tables (shared with lorena-wolfewicz or older schema)
 model events {
   id                      Int      @id @default(autoincrement())
   title                   String

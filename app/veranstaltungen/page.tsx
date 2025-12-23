@@ -132,12 +132,17 @@ export default async function VeranstaltungenPage() {
                       </span>
                     </div>
 
-                    {formatPrice(event.price_text) && (
-                      <div className="flex items-center gap-2">
-                        <Euro className="h-4 w-4 text-neutral-400" />
-                        <span>{formatPrice(event.price_text)}</span>
-                      </div>
-                    )}
+                    {(() => {
+                      const price = formatPrice(event.price_text);
+                      if (!price) return null;
+                      const hasNumber = /^\d/.test(price);
+                      return (
+                        <div className="flex items-center gap-2">
+                          <Euro className="h-4 w-4 text-neutral-400" />
+                          <span>{hasNumber ? `${price} Euro` : price}</span>
+                        </div>
+                      );
+                    })()}
                   </div>
 
                   {/* CTA */}
