@@ -10,15 +10,31 @@ export const dynamic = "force-dynamic";
 
 export default async function HomePage() {
   const now = new Date();
-  const upcomingEvents = await prisma.hfzEvent.findMany({
-    where: {
-      starts_at: {
-        gt: now,
+  // #region agent log
+  fetch('http://127.0.0.1:7243/ingest/197ec369-bd1d-4a8f-8f51-8566d35cb69f',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'app/page.tsx:13',message:'Starting hfzEvent.findMany query',data:{now:now.toISOString()},timestamp:Date.now(),sessionId:'debug-session',hypothesisId:'A-B'})}).catch(()=>{});
+  // #endregion
+  
+  let upcomingEvents: Awaited<ReturnType<typeof prisma.hfzEvent.findMany>> = [];
+  try {
+    upcomingEvents = await prisma.hfzEvent.findMany({
+      where: {
+        starts_at: {
+          gt: now,
+        },
       },
-    },
-    orderBy: { starts_at: "asc" },
-    take: 6,
-  });
+      orderBy: { starts_at: "asc" },
+      take: 6,
+    });
+    // #region agent log
+    fetch('http://127.0.0.1:7243/ingest/197ec369-bd1d-4a8f-8f51-8566d35cb69f',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'app/page.tsx:27',message:'hfzEvent.findMany succeeded',data:{count:upcomingEvents.length,fields:upcomingEvents[0]?Object.keys(upcomingEvents[0]):[]},timestamp:Date.now(),sessionId:'debug-session',hypothesisId:'A-success'})}).catch(()=>{});
+    // #endregion
+  } catch (error: unknown) {
+    // #region agent log
+    const errData = error instanceof Error ? {name:error.name,message:error.message,code:(error as {code?:string}).code,meta:(error as {meta?:unknown}).meta} : {raw:String(error)};
+    fetch('http://127.0.0.1:7243/ingest/197ec369-bd1d-4a8f-8f51-8566d35cb69f',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'app/page.tsx:32',message:'hfzEvent.findMany FAILED',data:errData,timestamp:Date.now(),sessionId:'debug-session',hypothesisId:'A-B-C-D-E'})}).catch(()=>{});
+    // #endregion
+    throw error;
+  }
 
   return (
     <div className="flex flex-col">

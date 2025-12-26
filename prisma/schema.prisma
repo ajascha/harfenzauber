@@ -29,7 +29,7 @@ model HfzEvent {
   time_text                 String?
   venue_name                String?
   price_text                String?
-  show_contact_registration Boolean   @default(false) @map("showContactRegistration")
+  show_contact_registration Boolean   @default(false)
 
   @@map("hfz_events")
 }
