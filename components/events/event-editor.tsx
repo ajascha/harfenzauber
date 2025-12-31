@@ -7,6 +7,7 @@ import {
   DialogHeader,
   DialogTitle,
   DialogFooter,
+  DialogTrigger,
 } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -87,19 +88,10 @@ export function EventEditor({ event, children }: EventEditorProps) {
     }
   }
 
-  // Controlled dialog pattern: clone children with onClick to open
-  // This avoids DialogTrigger asChild SSR issues with RSC
-  const trigger = React.isValidElement(children)
-    ? React.cloneElement(children as React.ReactElement<{ onClick?: () => void }>, {
-        onClick: () => setOpen(true),
-      })
-    : children;
-
   return (
-    <>
-      {trigger}
-      <Dialog open={open} onOpenChange={setOpen}>
-        <DialogContent>
+    <Dialog open={open} onOpenChange={setOpen}>
+      <DialogTrigger asChild>{children}</DialogTrigger>
+      <DialogContent>
         <DialogHeader>
           <DialogTitle>
             {event
@@ -270,6 +262,5 @@ export function EventEditor({ event, children }: EventEditorProps) {
         </form>
       </DialogContent>
     </Dialog>
-    </>
   );
 }
