@@ -53,6 +53,9 @@ export function EventEditor({ event, children }: EventEditorProps) {
   const [showContactRegistration, setShowContactRegistration] = React.useState(
     event?.show_contact_registration ?? false
   );
+  const [registrationUrl, setRegistrationUrl] = React.useState<string>(
+    event?.registration_url ?? ""
+  );
 
   async function onSubmit(formData: FormData) {
     try {
@@ -91,7 +94,7 @@ export function EventEditor({ event, children }: EventEditorProps) {
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>{children}</DialogTrigger>
-      <DialogContent>
+      <DialogContent className="max-w-2xl">
         <DialogHeader>
           <DialogTitle>
             {event
@@ -216,32 +219,77 @@ export function EventEditor({ event, children }: EventEditorProps) {
             />
           </div>
 
-          <div className="grid gap-2">
-            <Label htmlFor="registrationUrl">Anmeldelink</Label>
-            <Input
-              id="registrationUrl"
-              name="registrationUrl"
-              type="url"
-              defaultValue={event?.registration_url ?? ""}
-            />
-          </div>
+          <div className="space-y-4 border-t pt-4">
+            <div>
+              <Label className="text-base font-semibold mb-2 block">
+                Anmeldung
+              </Label>
+              <p className="text-sm text-muted-foreground mb-4">
+                Wähle eine der beiden Optionen: Entweder einen externen
+                Anmeldelink angeben oder Kontaktdaten für die Anmeldung
+                anzeigen.
+              </p>
+            </div>
 
-          <div className="flex items-center gap-2">
-            <Checkbox
-              id="showContactRegistration"
-              checked={showContactRegistration}
-              onCheckedChange={(checked) =>
-                setShowContactRegistration(checked === true)
-              }
-            />
-            <Label htmlFor="showContactRegistration" className="text-sm font-normal cursor-pointer">
-              Kontaktdaten für Anmeldung anzeigen (falls kein Anmeldelink)
-            </Label>
-            <input
-              type="hidden"
-              name="showContactRegistration"
-              value={showContactRegistration ? "true" : "false"}
-            />
+            <div className="space-y-3 pl-4 border-l-2 border-muted">
+              <div className="grid gap-2">
+                <Label htmlFor="registrationUrl" className="font-normal">
+                  Option 1: Externer Anmeldelink
+                </Label>
+                <Input
+                  id="registrationUrl"
+                  name="registrationUrl"
+                  type="url"
+                  value={registrationUrl}
+                  onChange={(e) => {
+                    setRegistrationUrl(e.target.value);
+                    if (e.target.value.trim()) {
+                      setShowContactRegistration(false);
+                    }
+                  }}
+                  placeholder="https://..."
+                />
+                <p className="text-xs text-muted-foreground">
+                  Falls vorhanden, wird dieser Link auf der Veranstaltungsseite
+                  angezeigt.
+                </p>
+              </div>
+
+              <div className="pt-2">
+                <div className="flex items-start gap-2">
+                  <Checkbox
+                    id="showContactRegistration"
+                    checked={showContactRegistration && !registrationUrl.trim()}
+                    onCheckedChange={(checked) =>
+                      setShowContactRegistration(checked === true)
+                    }
+                    disabled={!!registrationUrl.trim()}
+                  />
+                  <div className="space-y-1 flex-1">
+                    <Label
+                      htmlFor="showContactRegistration"
+                      className="text-sm font-normal cursor-pointer"
+                    >
+                      Option 2: Kontaktdaten anzeigen
+                    </Label>
+                    <p className="text-xs text-muted-foreground">
+                      {registrationUrl.trim()
+                        ? "Deaktiviert, da ein Anmeldelink angegeben ist."
+                        : "Zeigt Telefonnummer und E-Mail für die Anmeldung an."}
+                    </p>
+                  </div>
+                </div>
+                <input
+                  type="hidden"
+                  name="showContactRegistration"
+                  value={
+                    showContactRegistration && !registrationUrl.trim()
+                      ? "true"
+                      : "false"
+                  }
+                />
+              </div>
+            </div>
           </div>
 
           <DialogFooter className="flex items-center justify-between gap-2">
