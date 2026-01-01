@@ -10,11 +10,10 @@ export const dynamic = "force-dynamic";
 
 export default async function HomePage() {
   const now = new Date();
-  // #region agent log
-  fetch('http://127.0.0.1:7243/ingest/197ec369-bd1d-4a8f-8f51-8566d35cb69f',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'app/page.tsx:13',message:'Starting hfzEvent.findMany query',data:{now:now.toISOString()},timestamp:Date.now(),sessionId:'debug-session',hypothesisId:'A-B'})}).catch(()=>{});
-  // #endregion
   
   let upcomingEvents: Awaited<ReturnType<typeof prisma.hfzEvent.findMany>> = [];
+  let eventsError: Error | null = null;
+  
   try {
     upcomingEvents = await prisma.hfzEvent.findMany({
       where: {
@@ -25,15 +24,13 @@ export default async function HomePage() {
       orderBy: { starts_at: "asc" },
       take: 6,
     });
-    // #region agent log
-    fetch('http://127.0.0.1:7243/ingest/197ec369-bd1d-4a8f-8f51-8566d35cb69f',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'app/page.tsx:27',message:'hfzEvent.findMany succeeded',data:{count:upcomingEvents.length,fields:upcomingEvents[0]?Object.keys(upcomingEvents[0]):[]},timestamp:Date.now(),sessionId:'debug-session',hypothesisId:'A-success'})}).catch(()=>{});
-    // #endregion
   } catch (error: unknown) {
-    // #region agent log
-    const errData = error instanceof Error ? {name:error.name,message:error.message,code:(error as {code?:string}).code,meta:(error as {meta?:unknown}).meta} : {raw:String(error)};
-    fetch('http://127.0.0.1:7243/ingest/197ec369-bd1d-4a8f-8f51-8566d35cb69f',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'app/page.tsx:32',message:'hfzEvent.findMany FAILED',data:errData,timestamp:Date.now(),sessionId:'debug-session',hypothesisId:'A-B-C-D-E'})}).catch(()=>{});
-    // #endregion
-    throw error;
+    const err = error instanceof Error ? error : new Error(String(error));
+    if (process.env.NODE_ENV === "development") {
+      console.error("Failed to fetch events on home page:", err);
+    }
+    eventsError = err;
+    // Continue rendering with empty events array - graceful fallback
   }
 
   return (
@@ -177,7 +174,20 @@ export default async function HomePage() {
       </section>
 
       {/* Upcoming Events */}
-      {upcomingEvents.length > 0 && (
+      {eventsError ? (
+        <section className="py-16 md:py-24">
+          <div className="container mx-auto px-4 md:px-6 w-full max-w-7xl">
+            <div className="text-center">
+              <h2 className="text-3xl font-bold tracking-tighter mb-4">
+                Kommende Veranstaltungen
+              </h2>
+              <p className="text-lg text-muted-foreground">
+                Veranstaltungen konnten nicht geladen werden. Bitte versuchen Sie es später erneut.
+              </p>
+            </div>
+          </div>
+        </section>
+      ) : upcomingEvents.length > 0 ? (
         <section className="py-16 md:py-24">
           <div className="container mx-auto px-4 md:px-6 w-full max-w-7xl">
             <div className="flex items-center justify-between mb-8">
@@ -247,7 +257,7 @@ export default async function HomePage() {
             </div>
           </div>
         </section>
-      )}
+      ) : null}
 
       {/* CD Section */}
       <section className="py-16 md:py-24 bg-secondary/20">

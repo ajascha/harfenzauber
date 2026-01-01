@@ -21,6 +21,7 @@ import {
   deleteEvent,
 } from "@/app/veranstaltungen/actions";
 import { ImageGallery } from "@/components/image-gallery";
+import { toast } from "sonner";
 
 type EventLike = {
   id: number;
@@ -63,11 +64,17 @@ export function EventEditor({ event, children }: EventEditorProps) {
       if (event) formData.set("id", String(event.id));
       await action(formData);
       setOpen(false);
+      toast.success(
+        event ? "Veranstaltung aktualisiert" : "Veranstaltung erstellt"
+      );
     } catch (e) {
+      const error = e as Error;
       if (process.env.NODE_ENV === "development") {
-        console.error(e);
+        console.error("Event save error:", error);
       }
-      alert((e as Error).message || "Fehler beim Speichern");
+      toast.error(
+        error.message || "Fehler beim Speichern. Bitte versuchen Sie es erneut."
+      );
     } finally {
       setPending(false);
     }
@@ -81,11 +88,15 @@ export function EventEditor({ event, children }: EventEditorProps) {
       setPending(true);
       await deleteEvent(event.id);
       setOpen(false);
+      toast.success("Veranstaltung gelöscht");
     } catch (e) {
+      const error = e as Error;
       if (process.env.NODE_ENV === "development") {
-        console.error(e);
+        console.error("Event delete error:", error);
       }
-      alert((e as Error).message || "Fehler beim Löschen");
+      toast.error(
+        error.message || "Fehler beim Löschen. Bitte versuchen Sie es erneut."
+      );
     } finally {
       setPending(false);
     }

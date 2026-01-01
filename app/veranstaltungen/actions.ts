@@ -4,6 +4,15 @@ import { prisma } from "@/lib/db";
 import { revalidatePath } from "next/cache";
 import { createClient } from "@/lib/supabase/server";
 
+async function requireUser() {
+  const supabase = await createClient();
+  const { data } = await supabase.auth.getClaims();
+  if (!data?.claims) {
+    throw new Error("Nicht autorisiert");
+  }
+  return data.claims;
+}
+
 function slugify(text: string): string {
   return text
     .toLowerCase()
@@ -12,11 +21,7 @@ function slugify(text: string): string {
 }
 
 export async function createEvent(formData: FormData) {
-  const supabase = await createClient();
-  const { data } = await supabase.auth.getClaims();
-  if (!data?.claims) {
-    throw new Error("Nicht autorisiert");
-  }
+  await requireUser();
 
   const title = formData.get("title") as string;
   const subtitle = (formData.get("subtitle") as string) || null;
@@ -55,11 +60,7 @@ export async function createEvent(formData: FormData) {
 }
 
 export async function updateEvent(formData: FormData) {
-  const supabase = await createClient();
-  const { data } = await supabase.auth.getClaims();
-  if (!data?.claims) {
-    throw new Error("Nicht autorisiert");
-  }
+  await requireUser();
 
   const id = parseInt(formData.get("id") as string);
   const title = formData.get("title") as string;
@@ -100,11 +101,7 @@ export async function updateEvent(formData: FormData) {
 }
 
 export async function deleteEvent(id: number) {
-  const supabase = await createClient();
-  const { data } = await supabase.auth.getClaims();
-  if (!data?.claims) {
-    throw new Error("Nicht autorisiert");
-  }
+  await requireUser();
 
   await prisma.hfzEvent.delete({
     where: { id },

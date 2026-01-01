@@ -9,6 +9,7 @@ import {
 import { GoogleAnalytics } from "@next/third-parties/google";
 import { Analytics } from "@vercel/analytics/next";
 import { SpeedInsights } from "@vercel/speed-insights/next";
+import { Toaster } from "@/components/ui/sonner";
 import "./globals.css";
 
 const defaultUrl = process.env.VERCEL_URL
@@ -61,6 +62,7 @@ export default function RootLayout({
         <Analytics />
         <SpeedInsights />
         <GoogleAnalytics gaId="G-LDH55R3TVL" />
+        <Toaster />
       </body>
     </html>
   );
