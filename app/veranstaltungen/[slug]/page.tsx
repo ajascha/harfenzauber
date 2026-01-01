@@ -90,7 +90,11 @@ export default async function EventDetailPage({ params }: Props) {
             {formattedPrice && (
               <div className="flex items-center gap-2">
                 <Euro className="h-4 w-4 text-neutral-400" />
-                <span>{/^\d/.test(formattedPrice) ? `${formattedPrice} Euro` : formattedPrice}</span>
+                <span>
+                  {/^\d/.test(formattedPrice)
+                    ? `${formattedPrice} Euro`
+                    : formattedPrice}
+                </span>
               </div>
             )}
           </div>

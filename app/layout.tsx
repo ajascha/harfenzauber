@@ -10,6 +10,7 @@ import { GoogleAnalytics } from "@next/third-parties/google";
 import { Analytics } from "@vercel/analytics/next";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import { Toaster } from "@/components/ui/sonner";
+import { nunito, marcellus } from "./fonts";
 import "./globals.css";
 
 const defaultUrl = process.env.VERCEL_URL
@@ -55,7 +56,9 @@ export default function RootLayout({
         {/* LLM-friendly metadata */}
         <link rel="alternate" type="text/markdown" href="/llms.txt" />
       </head>
-      <body className="antialiased min-h-screen flex flex-col">
+      <body
+        className={`${nunito.variable} ${marcellus.variable} antialiased min-h-screen flex flex-col`}
+      >
         <SiteHeader />
         <main className="flex-1">{children}</main>
         <SiteFooter />

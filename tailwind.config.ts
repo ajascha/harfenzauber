@@ -69,8 +69,8 @@ export default {
         sm: "calc(var(--radius) - 4px)",
       },
       fontFamily: {
-        heading: ["Marcellus", "serif"],
-        sans: ["Nunito", "sans-serif"],
+        heading: ["var(--font-heading)", "serif"],
+        sans: ["var(--font-sans)", "sans-serif"],
       },
     },
   },

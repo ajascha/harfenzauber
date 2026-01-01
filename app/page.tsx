@@ -10,10 +10,10 @@ export const revalidate = 300; // Revalidate every 5 minutes
 
 export default async function HomePage() {
   const now = new Date();
-  
+
   let upcomingEvents: Awaited<ReturnType<typeof prisma.hfzEvent.findMany>> = [];
   let eventsError: Error | null = null;
-  
+
   try {
     upcomingEvents = await prisma.hfzEvent.findMany({
       where: {
@@ -190,7 +190,8 @@ export default async function HomePage() {
                 Kommende Veranstaltungen
               </h2>
               <p className="text-lg text-muted-foreground">
-                Veranstaltungen konnten nicht geladen werden. Bitte versuchen Sie es später erneut.
+                Veranstaltungen konnten nicht geladen werden. Bitte versuchen
+                Sie es später erneut.
               </p>
             </div>
           </div>

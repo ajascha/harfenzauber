@@ -1,29 +1,43 @@
-import Link from "next/link";
-import { Button } from "./ui/button";
-import { createClient } from "@/lib/supabase/server";
-import { LogoutButton } from "./logout-button";
+"use client";
 
-export async function AuthButton() {
-  const supabase = await createClient();
+import { Button } from "@/components/ui/button";
+import { LogOut } from "lucide-react";
+import { useEffect, useState } from "react";
+import { createClient } from "@/lib/supabase/client";
+import { useRouter } from "next/navigation";
 
-  // You can also use getUser() which will be slower.
-  const { data } = await supabase.auth.getClaims();
+export function AuthButton() {
+  const [isAuthed, setIsAuthed] = useState(false);
+  const [mounted, setMounted] = useState(false);
+  const router = useRouter();
+  const supabase = createClient();
 
-  const user = data?.claims;
+  useEffect(() => {
+    setMounted(true);
+    const checkAuth = async () => {
+      const { data } = await supabase.auth.getClaims();
+      setIsAuthed(Boolean(data?.claims));
+    };
+    void checkAuth();
+  }, [supabase]);
 
-  return user ? (
-    <div className="flex items-center gap-4">
-      Hey, {user.email}!
-      <LogoutButton />
-    </div>
-  ) : (
-    <div className="flex gap-2">
-      <Button asChild size="sm" variant={"outline"}>
-        <Link href="/auth/login">Sign in</Link>
-      </Button>
-      <Button asChild size="sm" variant={"default"}>
-        <Link href="/auth/sign-up">Sign up</Link>
-      </Button>
-    </div>
+  const handleLogout = async () => {
+    await supabase.auth.signOut();
+    router.push("/login");
+  };
+
+  if (!mounted || !isAuthed) {
+    return null;
+  }
+
+  return (
+    <Button
+      onClick={handleLogout}
+      variant="ghost"
+      size="sm"
+      className="ml-4"
+    >
+      <LogOut className="h-4 w-4 mr-2" /> Logout
+    </Button>
   );
 }
