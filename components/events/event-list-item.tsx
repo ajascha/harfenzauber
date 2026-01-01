@@ -129,4 +129,3 @@ export function EventListItem({ event, isAuthed }: EventListItemProps) {
     </Card>
   );
 }
-
