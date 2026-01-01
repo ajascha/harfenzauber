@@ -6,7 +6,14 @@ import { Button } from "@/components/ui/button";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 
-export const dynamic = "force-dynamic";
+export const revalidate = 300; // Revalidate every 5 minutes
+
+export async function generateStaticParams() {
+  const posts = await prisma.hfzPost.findMany({
+    select: { slug: true },
+  });
+  return posts.map((post) => ({ slug: post.slug }));
+}
 
 export async function generateMetadata({
   params,

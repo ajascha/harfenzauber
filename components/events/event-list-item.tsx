@@ -37,7 +37,9 @@ export function EventListItem({ event, isAuthed }: EventListItemProps) {
               src={event.image_url}
               alt={event.title}
               fill
+              sizes="(max-width: 768px) 100vw, 256px"
               className="object-cover"
+              quality={80}
             />
           </div>
         )}

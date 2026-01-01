@@ -6,7 +6,7 @@ import { prisma } from "@/lib/db";
 import { Calendar, MapPin } from "lucide-react";
 import { ContactForm } from "@/components/contact-form";
 
-export const dynamic = "force-dynamic";
+export const revalidate = 300; // Revalidate every 5 minutes
 
 export default async function HomePage() {
   const now = new Date();
@@ -61,8 +61,10 @@ export default async function HomePage() {
                 src="/images/lorena-hero.jpeg"
                 alt="Lorena Wolfewicz mit Harfe"
                 fill
+                sizes="(max-width: 1024px) 100vw, 50vw"
                 className="object-cover"
                 priority
+                quality={85}
               />
             </div>
           </div>
@@ -83,7 +85,9 @@ export default async function HomePage() {
                   src="/images/harfenunterricht.jpeg"
                   alt="Harfenunterricht"
                   fill
+                  sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
                   className="object-cover group-hover:scale-105 transition-transform duration-300"
+                  quality={80}
                 />
               </div>
               <div className="p-6 flex flex-col flex-grow">
@@ -107,7 +111,9 @@ export default async function HomePage() {
                   src="/images/soloauftritt.jpeg"
                   alt="Öffentliche Veranstaltungen"
                   fill
+                  sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
                   className="object-cover group-hover:scale-105 transition-transform duration-300"
+                  quality={80}
                 />
               </div>
               <div className="p-6 flex flex-col flex-grow">
@@ -131,7 +137,9 @@ export default async function HomePage() {
                   src="/images/kirche.jpeg"
                   alt="Harfenmusik für Feste & Feiern"
                   fill
+                  sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
                   className="object-cover group-hover:scale-105 transition-transform duration-300"
+                  quality={80}
                 />
               </div>
               <div className="p-6 flex flex-col flex-grow">
@@ -210,7 +218,9 @@ export default async function HomePage() {
                         src={event.image_url}
                         alt={event.title}
                         fill
+                        sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
                         className="object-cover"
+                        quality={80}
                       />
                     </div>
                   )}
@@ -268,7 +278,9 @@ export default async function HomePage() {
                 src="/images/cd-cover.jpeg"
                 alt="Harfenzauber CD"
                 fill
+                sizes="(max-width: 1024px) 100vw, 50vw"
                 className="object-contain"
+                quality={85}
               />
             </div>
             <div className="space-y-4">

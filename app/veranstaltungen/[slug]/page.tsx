@@ -6,7 +6,7 @@ import { Calendar, MapPin, Euro, Phone, Mail } from "lucide-react";
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
 
-export const dynamic = "force-dynamic";
+export const revalidate = 300; // Revalidate every 5 minutes
 
 type Props = {
   params: Promise<{ slug: string }>;
@@ -52,7 +52,9 @@ export default async function EventDetailPage({ params }: Props) {
               src={event.image_url}
               alt={event.title}
               fill
+              sizes="(max-width: 768px) 100vw, 768px"
               className="object-cover object-top"
+              quality={85}
             />
           </div>
         )}
