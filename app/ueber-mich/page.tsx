@@ -109,7 +109,7 @@ export default function Page() {
       <section className="py-12 md:py-16">
         <div className="container mx-auto px-4 md:px-6 w-full max-w-2xl">
           <Card className="bg-secondary/10 border-secondary/30 p-6 md:p-8 text-center">
-            <p className="text-sm text-muted-foreground/70 uppercase tracking-wide mb-2">
+            <p className="text-sm text-muted-foreground/70 tracking-wide mb-2">
               Mehr von Lorena
             </p>
             <p className="text-base text-muted-foreground mb-4">

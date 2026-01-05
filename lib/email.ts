@@ -39,17 +39,25 @@ export function renderContactEmailHtml({
 }: {
   name: string;
   email: string;
-  phone: string;
+  phone?: string;
   message: string;
-  submittedAtISO: string;
+  submittedAtISO?: string;
 }) {
-  const submittedAt = new Date(submittedAtISO).toLocaleString("de-DE", {
-    year: "numeric",
-    month: "long",
-    day: "numeric",
-    hour: "2-digit",
-    minute: "2-digit",
-  });
+  const submittedAt = submittedAtISO
+    ? new Date(submittedAtISO).toLocaleString("de-DE", {
+        year: "numeric",
+        month: "long",
+        day: "numeric",
+        hour: "2-digit",
+        minute: "2-digit",
+      })
+    : new Date().toLocaleString("de-DE", {
+        year: "numeric",
+        month: "long",
+        day: "numeric",
+        hour: "2-digit",
+        minute: "2-digit",
+      });
 
   return `
     <!DOCTYPE html>
@@ -66,62 +74,81 @@ export function renderContactEmailHtml({
             max-width: 600px;
             margin: 0 auto;
             padding: 20px;
+            background-color: #f9fafb;
           }
           .header {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: linear-gradient(135deg, #10b981 0%, #14b8a6 100%);
             color: white;
-            padding: 30px;
+            padding: 32px 30px;
             border-radius: 8px 8px 0 0;
             text-align: center;
           }
+          .header h1 {
+            margin: 0;
+            font-size: 28px;
+            font-weight: 600;
+            letter-spacing: -0.5px;
+          }
+          .header p {
+            margin: 8px 0 0 0;
+            opacity: 0.95;
+            font-size: 14px;
+          }
           .content {
-            background: #f8f9fa;
+            background: white;
             padding: 30px;
             border-radius: 0 0 8px 8px;
-            border: 1px solid #e9ecef;
+            border: 1px solid #e5e7eb;
           }
           .field {
-            margin-bottom: 20px;
-            padding: 15px;
-            background: white;
-            border-radius: 6px;
-            border-left: 4px solid #667eea;
+            margin-bottom: 16px;
+            padding: 12px 0;
+            border-bottom: 1px solid #f3f4f6;
+          }
+          .field:last-of-type {
+            border-bottom: none;
           }
           .field-label {
             font-weight: 600;
-            color: #495057;
-            margin-bottom: 5px;
-            font-size: 14px;
+            color: #6b7280;
+            margin-bottom: 4px;
+            font-size: 12px;
             text-transform: uppercase;
             letter-spacing: 0.5px;
           }
           .field-value {
-            color: #212529;
-            font-size: 16px;
+            color: #111827;
+            font-size: 15px;
+          }
+          .field-value a {
+            color: #10b981;
+            text-decoration: none;
           }
           .message-field {
-            background: white;
-            padding: 20px;
+            background: #f9fafb;
+            padding: 16px;
             border-radius: 6px;
-            border-left: 4px solid #28a745;
+            border-left: 3px solid #10b981;
             white-space: pre-wrap;
-            font-size: 16px;
+            font-size: 15px;
             line-height: 1.6;
+            color: #111827;
+            margin-top: 8px;
           }
           .footer {
             text-align: center;
-            margin-top: 30px;
-            padding: 20px;
-            color: #6c757d;
-            font-size: 14px;
-            border-top: 1px solid #e9ecef;
+            margin-top: 24px;
+            padding-top: 20px;
+            color: #6b7280;
+            font-size: 13px;
+            border-top: 1px solid #e5e7eb;
           }
         </style>
       </head>
       <body>
         <div class="header">
-          <h1 style="margin: 0; font-size: 24px;">Neue Kontaktanfrage</h1>
-          <p style="margin: 10px 0 0 0; opacity: 0.9;">Eingegangen am ${escapeHtml(submittedAt)}</p>
+          <h1>Harfenzauber</h1>
+          <p>Neue Kontaktanfrage • ${escapeHtml(submittedAt)}</p>
         </div>
         
         <div class="content">
@@ -133,7 +160,7 @@ export function renderContactEmailHtml({
           <div class="field">
             <div class="field-label">E-Mail</div>
             <div class="field-value">
-              <a href="mailto:${escapeHtml(email)}" style="color: #667eea; text-decoration: none;">${escapeHtml(email)}</a>
+              <a href="mailto:${escapeHtml(email)}">${escapeHtml(email)}</a>
             </div>
           </div>
           
@@ -143,7 +170,7 @@ export function renderContactEmailHtml({
           <div class="field">
             <div class="field-label">Telefon</div>
             <div class="field-value">
-              <a href="tel:${escapeHtml(phone)}" style="color: #667eea; text-decoration: none;">${escapeHtml(phone)}</a>
+              <a href="tel:${escapeHtml(phone)}">${escapeHtml(phone)}</a>
             </div>
           </div>
           `

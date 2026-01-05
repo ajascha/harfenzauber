@@ -236,9 +236,7 @@ export function EventEditor({ event, children }: EventEditorProps) {
                 Anmeldung
               </Label>
               <p className="text-sm text-muted-foreground mb-4">
-                Wähle eine der beiden Optionen: Entweder einen externen
-                Anmeldelink angeben oder Kontaktdaten für die Anmeldung
-                anzeigen.
+                Wähle eine der drei Optionen für die Anmeldung.
               </p>
             </div>
 
@@ -299,6 +297,21 @@ export function EventEditor({ event, children }: EventEditorProps) {
                       : "false"
                   }
                 />
+              </div>
+
+              <div className="pt-2">
+                <div className="flex items-start gap-2">
+                  <div className="space-y-1 flex-1">
+                    <Label className="text-sm font-normal">
+                      Option 3: Keine Anmeldung anzeigen
+                    </Label>
+                    <p className="text-xs text-muted-foreground">
+                      {registrationUrl.trim() || showContactRegistration
+                        ? "Deaktiviert, da eine andere Option gewählt wurde."
+                        : "Es wird keine Anmeldeinformationen auf der Veranstaltungsseite angezeigt."}
+                    </p>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
