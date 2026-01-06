@@ -1,8 +1,8 @@
 import { prisma } from "@/lib/db";
-import { toSlug, formatPrice } from "@/lib/utils";
+import { toSlug } from "@/lib/utils";
 import Image from "next/image";
 import Link from "next/link";
-import { Calendar, MapPin, Euro, Phone, Mail } from "lucide-react";
+import { Calendar, MapPin, Phone, Mail } from "lucide-react";
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
 
@@ -38,8 +38,6 @@ export default async function EventDetailPage({ params }: Props) {
   if (!event) {
     notFound();
   }
-
-  const formattedPrice = formatPrice(event.price_text);
 
   return (
     <main className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
@@ -90,16 +88,6 @@ export default async function EventDetailPage({ params }: Props) {
                 {event.venue_name && `, ${event.venue_name}`}
               </span>
             </div>
-            {formattedPrice && (
-              <div className="flex items-center gap-2">
-                <Euro className="h-4 w-4 text-neutral-400" />
-                <span>
-                  {/^\d/.test(formattedPrice)
-                    ? `${formattedPrice} Euro`
-                    : formattedPrice}
-                </span>
-              </div>
-            )}
           </div>
 
           <div className="mt-6 whitespace-pre-wrap text-neutral-800 leading-relaxed">

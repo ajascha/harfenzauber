@@ -4,9 +4,9 @@ import Link from "next/link";
 import Image from "next/image";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Calendar, MapPin, Euro } from "lucide-react";
+import { Calendar, MapPin } from "lucide-react";
 import { EventEditor } from "@/components/events/event-editor";
-import { toSlug, formatPrice } from "@/lib/utils";
+import { toSlug } from "@/lib/utils";
 
 type EventListItemProps = {
   event: {
@@ -102,18 +102,6 @@ export function EventListItem({ event, isAuthed }: EventListItemProps) {
                 {event.venue_name && `, ${event.venue_name}`}
               </span>
             </div>
-
-            {(() => {
-              const price = formatPrice(event.price_text);
-              if (!price) return null;
-              const hasNumber = /^\d/.test(price);
-              return (
-                <div className="flex items-center gap-2">
-                  <Euro className="h-4 w-4 text-neutral-400" />
-                  <span>{hasNumber ? `${price} Euro` : price}</span>
-                </div>
-              );
-            })()}
           </div>
 
           {/* CTA */}

@@ -217,18 +217,7 @@ export function EventEditor({ event, children }: EventEditorProps) {
             />
           </div>
 
-          <div className="grid gap-2">
-            <Label htmlFor="priceText">
-              Preis (optional, z. B. &quot;50.00 EUR&quot; oder &quot;Auf
-              Spendenbasis&quot;)
-            </Label>
-            <Input
-              id="priceText"
-              name="priceText"
-              type="text"
-              defaultValue={event?.price_text ?? ""}
-            />
-          </div>
+          {/* Prices are intentionally not managed on harfenzauber (handled on the other project). */}
 
           <div className="space-y-4 border-t pt-4">
             <div>

@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/db";
-import { toSlug, formatPrice } from "@/lib/utils";
+import { toSlug } from "@/lib/utils";
 
 // Escape strings for YAML front matter (handles colons, quotes, newlines)
 function yamlEscape(str: string): string {
@@ -261,8 +261,6 @@ ${post.content || ""}
           month: "long",
           year: "numeric",
         }).format(event.starts_at);
-        const priceStr = formatPrice(event.price_text);
-        
         const markdown = `---
 title: ${yamlEscape(event.title + " - Harfenzauber")}
 url: https://www.harfenzauber.de/veranstaltungen/${slug}
@@ -277,7 +275,6 @@ ${event.subtitle ? `**${event.subtitle}**\n\n` : ""}
 
 - **Datum:** ${dateStr}${event.time_text ? ` · ${event.time_text}` : ""}
 - **Ort:** ${event.address}${event.venue_name ? `, ${event.venue_name}` : ""}
-${priceStr ? `- **Preis:** ${priceStr}` : ""}
 
 ## Beschreibung
 

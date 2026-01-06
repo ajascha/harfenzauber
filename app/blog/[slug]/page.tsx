@@ -6,7 +6,8 @@ import { Button } from "@/components/ui/button";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 
-export const revalidate = 300; // Revalidate every 5 minutes
+// Blog content is DB-driven; keep it fresh after seeding without waiting for ISR.
+export const dynamic = "force-dynamic";
 
 export async function generateStaticParams() {
   const posts = await prisma.hfzPost.findMany({

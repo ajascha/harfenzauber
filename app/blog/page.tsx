@@ -3,12 +3,32 @@ import Link from "next/link";
 import { prisma } from "@/lib/db";
 import { Card } from "@/components/ui/card";
 
-export const revalidate = 300; // Revalidate every 5 minutes
+// Blog content is DB-driven; keep it fresh after seeding without waiting for ISR.
+export const dynamic = "force-dynamic";
 
 export const metadata: Metadata = {
   title: "Blog",
   description: "Interessante Artikel rund um die Harfe und Harfenmusik",
 };
+
+function stripMarkdownForPreview(markdown: string): string {
+  return (
+    markdown
+      // Drop headings completely
+      .replace(/^#{1,6}\s+/gm, "")
+      // Drop images
+      .replace(/!\[[^\]]*]\([^)]*\)/g, "")
+      // Convert links to their label
+      .replace(/\[([^\]]+)]\([^)]*\)/g, "$1")
+      // Remove bold/italic/code markers
+      .replace(/[*_`]/g, "")
+      // Remove blockquote markers
+      .replace(/^\s*>\s?/gm, "")
+      // Collapse whitespace
+      .replace(/\s+/g, " ")
+      .trim()
+  );
+}
 
 export default async function BlogPage() {
   const posts = await prisma.hfzPost.findMany({
@@ -36,7 +56,10 @@ export default async function BlogPage() {
                   </h2>
                   {post.content && (
                     <p className="text-muted-foreground text-sm mb-3 line-clamp-3">
-                      {post.content.substring(0, 150)}...
+                      {stripMarkdownForPreview(post.content).substring(0, 150)}
+                      {stripMarkdownForPreview(post.content).length > 150
+                        ? "…"
+                        : ""}
                     </p>
                   )}
                   <div className="text-xs text-muted-foreground">

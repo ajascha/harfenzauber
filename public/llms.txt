@@ -15,7 +15,7 @@ Lorena Wolfewicz verzaubert mit ihren Harfenklängen jede Veranstaltung. Ihr Rep
 - [Über mich](https://www.harfenzauber.de/ueber-mich): Musikalischer Werdegang und Hintergrund
 - [Harfenunterricht](https://www.harfenzauber.de/harfenunterricht): Unterricht für Anfänger und Fortgeschrittene
 - [Kontakt](https://www.harfenzauber.de/kontakt): Buchungsanfragen und Kontaktformular
-- [Preise](https://www.harfenzauber.de/preise): Kosten für Auftritte und Unterricht
+- [Anfrage](https://www.harfenzauber.de/preise): Unverbindliche Anfrage für Harfenmusik oder Harfenunterricht
 - [Repertoire](https://www.harfenzauber.de/repertoire): Musikauswahl und Stilrichtungen
 - [FAQ](https://www.harfenzauber.de/faq): Häufig gestellte Fragen
 

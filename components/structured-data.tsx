@@ -46,7 +46,6 @@ export function OrganizationSchema() {
       jobTitle: "Harfenistin",
     },
     sameAs: [],
-    priceRange: "€€€",
   };
 
   return (
@@ -182,7 +181,6 @@ export function MusicEventSchema({
   location,
   address,
   url,
-  price,
 }: {
   name: string;
   description: string;
@@ -191,7 +189,6 @@ export function MusicEventSchema({
   location: string;
   address?: string;
   url: string;
-  price?: string;
 }) {
   const schema = {
     "@context": "https://schema.org",
@@ -216,14 +213,6 @@ export function MusicEventSchema({
     performer: {
       "@id": "https://www.harfenzauber.de/#person",
     },
-    ...(price && {
-      offers: {
-        "@type": "Offer",
-        price,
-        priceCurrency: "EUR",
-        availability: "https://schema.org/InStock",
-      },
-    }),
     eventStatus: "https://schema.org/EventScheduled",
     eventAttendanceMode: "https://schema.org/OfflineEventAttendanceMode",
   };

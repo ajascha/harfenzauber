@@ -114,7 +114,7 @@ export default async function Page({
     {
       question: "Was kostet Harfenmusik für eine Hochzeit?",
       answer:
-        "Der Preis hängt von Dauer, Anfahrt und besonderen Wünschen ab. Für eine Trauung mit ca. 30-45 Minuten Musik können Sie mit etwa 300-400 € rechnen. Bei längeren Auftritten (Empfang, Feier) erstelle ich Ihnen gerne ein individuelles Angebot.",
+        "Das Angebot hängt von Dauer, Ort und besonderen Wünschen ab. Schreiben Sie mir kurz Datum, Location und den gewünschten Rahmen – ich melde mich zeitnah mit einem unverbindlichen Angebot.",
     },
     {
       question: "Wie lange spielt eine Harfenistin bei einer Veranstaltung?",
@@ -268,7 +268,7 @@ export default async function Page({
             <AccordionItem value="preis">
               <AccordionTrigger>Was kostet Harfenmusik für eine Hochzeit?</AccordionTrigger>
               <AccordionContent>
-                Der Preis hängt von Dauer, Anfahrt und besonderen Wünschen ab. Für eine Trauung mit ca. 30-45 Minuten Musik können Sie mit etwa 300-400 € rechnen. Bei längeren Auftritten (Empfang, Feier) erstelle ich Ihnen gerne ein individuelles Angebot.
+                Das Angebot hängt von Dauer, Ort und besonderen Wünschen ab. Schreiben Sie mir kurz Datum, Location und den gewünschten Rahmen – ich melde mich zeitnah mit einem unverbindlichen Angebot.
               </AccordionContent>
             </AccordionItem>
             <AccordionItem value="dauer">

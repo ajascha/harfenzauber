@@ -14,7 +14,7 @@ const faqs = [
   {
     question: "Was kostet Harfenmusik für eine Hochzeit?",
     answer:
-      "Der Preis hängt von Dauer, Anfahrt und besonderen Wünschen ab. Für eine Trauung mit ca. 30-45 Minuten Musik kannst du mit etwa 300-400 € rechnen. Bei längeren Auftritten (Empfang, Feier) erstelle ich dir gerne ein individuelles Angebot.",
+      "Das Angebot hängt von Dauer, Ort und besonderen Wünschen ab. Schreib mir kurz Datum, Location und den gewünschten Rahmen – ich melde mich zeitnah mit einem unverbindlichen Angebot.",
   },
   {
     question: "Wie lange spielt eine Harfenistin bei einer Veranstaltung?",
@@ -59,7 +59,7 @@ const faqs = [
   {
     question: "Was kostet Harfenunterricht?",
     answer:
-      "Der Einzelunterricht kostet je nach Dauer 25 € (30 Min.), 35 € (45 Min.) oder 45 € (60 Min.). Der Unterricht findet in Wiehl statt. Eine Probestunde zum Kennenlernen ist möglich.",
+      "Der Unterricht findet in Wiehl statt. Umfang und Häufigkeit stimmen wir passend zu deinem Ziel ab. Schreib mir kurz, ob es um Kinder oder Erwachsene geht – dann schicke ich dir alle Infos und wir finden einen guten Start (Probestunde möglich).",
   },
   {
     question: "Ab welchem Alter kann man Harfe lernen?",

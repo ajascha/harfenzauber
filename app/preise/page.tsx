@@ -4,21 +4,21 @@ import { Music, GraduationCap, MessageCircle } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 export const metadata: Metadata = {
-  title: "Preise – Harfenmusik & Unterricht",
+  title: "Anfrage – Harfenmusik & Unterricht",
   description:
-    "Preise für Harfenmusik bei Hochzeiten, Feiern und Veranstaltungen sowie Harfenunterricht im Oberbergischen Kreis.",
+    "Individuelle Angebote für Harfenmusik und Harfenunterricht. Schreiben Sie mir – ich melde mich mit einem passenden Vorschlag.",
 };
 
 export default function PreisePage() {
   return (
     <main className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
       <h1 className="text-3xl md:text-4xl font-light text-neutral-800 mb-6 text-center">
-        Preise
+        Anfrage & Angebot
       </h1>
 
       <p className="text-lg text-neutral-600 mb-12 text-center max-w-2xl mx-auto">
-        Die Kosten für Harfenmusik hängen von verschiedenen Faktoren ab. Hier
-        findest du eine Orientierung.
+        Ich erstelle Ihnen gern ein persönliches Angebot – passend zu Anlass,
+        Ort, Dauer und Ihren Wünschen.
       </p>
 
       {/* Live Music */}
@@ -39,7 +39,7 @@ export default function PreisePage() {
 
         <div className="space-y-4 text-neutral-700 mb-6">
           <p>
-            Der Preis für einen Auftritt hängt ab von:
+            Ein Angebot für einen Auftritt hängt ab von:
           </p>
           <ul className="list-disc list-inside space-y-2 ml-4">
             <li>Dauer des Auftritts (typisch: 30 Min. bis 2 Stunden)</li>
@@ -49,15 +49,9 @@ export default function PreisePage() {
           </ul>
         </div>
 
-        <p className="text-neutral-600 mb-4">
-          <strong>Richtwert:</strong> Ab ca. 250 € für einen kürzeren Auftritt
-          im Nahbereich. Hochzeiten und längere Auftritte nach individueller
-          Vereinbarung.
-        </p>
-
         <p className="text-sm text-neutral-500">
-          Gerne erstelle ich dir ein unverbindliches Angebot für deine
-          Veranstaltung.
+          Schreiben Sie mir kurz Datum, Ort und den gewünschten Rahmen – ich
+          melde mich zeitnah mit einem unverbindlichen Angebot.
         </p>
       </div>
 
@@ -77,24 +71,10 @@ export default function PreisePage() {
           </div>
         </div>
 
-        <div className="space-y-3 text-neutral-700 mb-6">
-          <div className="flex justify-between items-center py-2 border-b border-neutral-100">
-            <span>30 Minuten (für Kinder empfohlen)</span>
-            <span className="font-medium">25 €</span>
-          </div>
-          <div className="flex justify-between items-center py-2 border-b border-neutral-100">
-            <span>45 Minuten</span>
-            <span className="font-medium">35 €</span>
-          </div>
-          <div className="flex justify-between items-center py-2">
-            <span>60 Minuten</span>
-            <span className="font-medium">45 €</span>
-          </div>
-        </div>
-
         <p className="text-sm text-neutral-500">
-          Der Unterricht findet in Wiehl statt. Eine Probestunde zum
-          Kennenlernen ist möglich.
+          Der Unterricht findet in Wiehl statt. Umfang und Häufigkeit stimmen
+          wir passend zu Ihrem Ziel ab. Eine Probestunde zum Kennenlernen ist
+          möglich – schreiben Sie mir einfach.
         </p>
       </div>
 
