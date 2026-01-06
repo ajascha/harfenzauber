@@ -25,6 +25,13 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     { path: "preise", priority: 0.6, changeFrequency: "monthly" as const },
     { path: "repertoire", priority: 0.6, changeFrequency: "monthly" as const },
     { path: "faq", priority: 0.6, changeFrequency: "monthly" as const },
+    // Location/Region pages
+    { path: "region/koeln", priority: 0.6, changeFrequency: "monthly" as const },
+    { path: "region/bonn", priority: 0.6, changeFrequency: "monthly" as const },
+    { path: "region/gummersbach", priority: 0.6, changeFrequency: "monthly" as const },
+    { path: "region/bergisches-land", priority: 0.6, changeFrequency: "monthly" as const },
+    { path: "region/oberbergischer-kreis", priority: 0.6, changeFrequency: "monthly" as const },
+    { path: "region/olpe", priority: 0.5, changeFrequency: "monthly" as const },
   ];
 
   // Service pages (Angebote)

@@ -34,6 +34,15 @@ Lorena Wolfewicz verzaubert mit ihren Harfenklängen jede Veranstaltung. Ihr Rep
 - [Veranstaltungen](https://www.harfenzauber.de/veranstaltungen): Aktuelle Konzerte und öffentliche Auftritte (Übersicht mit Detailseiten für jede Veranstaltung)
 - [Blog](https://www.harfenzauber.de/blog): Artikel über Harfenmusik und Veranstaltungen
 
+## Regionen / Standorte
+
+- [Harfenmusik Köln](https://www.harfenzauber.de/region/koeln): Harfenistin für Hochzeit, Trauerfeier und Events in Köln
+- [Harfenmusik Bonn](https://www.harfenzauber.de/region/bonn): Harfenmusik für Veranstaltungen in Bonn
+- [Harfenmusik Gummersbach](https://www.harfenzauber.de/region/gummersbach): Lokale Harfenistin aus Gummersbach
+- [Harfenmusik Bergisches Land](https://www.harfenzauber.de/region/bergisches-land): Harfenmusik für die gesamte Region
+- [Harfenmusik Oberbergischer Kreis](https://www.harfenzauber.de/region/oberbergischer-kreis): Harfenistin im Oberbergischen Kreis
+- [Harfenmusik Olpe](https://www.harfenzauber.de/region/olpe): Harfenmusik für Veranstaltungen in Olpe
+
 ## Optional
 
 - [Sitemap](https://www.harfenzauber.de/sitemap.xml): Vollständige Seitenübersicht
