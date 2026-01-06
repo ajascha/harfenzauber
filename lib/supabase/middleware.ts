@@ -37,31 +37,14 @@ export const updateSession = async (request: NextRequest) => {
     } = await supabase.auth.getUser();
 
     const path = request.nextUrl.pathname;
-    const isPublicPath =
-      path === "/" ||
-      path === "/harfenunterricht" ||
-      path.startsWith("/angebot/") ||
-      path === "/veranstaltungen" ||
-      path.startsWith("/veranstaltungen/") ||
-      path === "/blog" ||
-      path.startsWith("/blog/") ||
-      path === "/kontakt" ||
-      path === "/login" ||
-      path.startsWith("/rechtliches/") ||
-      path.startsWith("/region/") ||
-      path === "/faq" ||
-      path === "/preise" ||
-      path === "/repertoire" ||
-      path === "/ueber-mich" ||
-      path === "/sitemap.xml" ||
-      path === "/robots.txt";
 
-    if (
-      !user &&
-      !isPublicPath &&
-      !path.startsWith("/auth") &&
-      (path.startsWith("/dashboard") || path.startsWith("/protected"))
-    ) {
+    // Only protect specific routes that require authentication
+    // Everything else is public by default (better for SEO and less error-prone)
+    const isProtectedRoute =
+      path.startsWith("/dashboard") || path.startsWith("/protected");
+
+    if (!user && isProtectedRoute && !path.startsWith("/auth")) {
+      // No user trying to access protected route, redirect to login
       const url = request.nextUrl.clone();
       url.pathname = "/auth/login";
       return NextResponse.redirect(url);
