@@ -36,6 +36,9 @@ export async function generateMetadata({
     description: post.content
       ? post.content.substring(0, 160) + "..."
       : undefined,
+    alternates: {
+      canonical: `https://www.harfenzauber.de/blog/${slug}`,
+    },
   };
 }
 

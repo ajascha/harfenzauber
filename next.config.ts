@@ -4,6 +4,20 @@ const nextConfig: NextConfig = {
   // Ensure AI crawlers that don't execute JavaScript get complete HTML
   htmlLimitedBots:
     /Googlebot|Bingbot|GPTBot|ClaudeBot|PerplexityBot|ChatGPT-User|OAI-SearchBot|anthropic-ai|CCBot|Meta-ExternalAgent/i,
+  async redirects() {
+    return [
+      {
+        source: "/veranstaltung/:slug*",
+        destination: "/veranstaltungen/:slug*",
+        permanent: true,
+      },
+      {
+        source: "/harfenmusik-feste-feiern",
+        destination: "/angebot/harfenkonzert",
+        permanent: true,
+      },
+    ];
+  },
   images: {
     remotePatterns: [
       {

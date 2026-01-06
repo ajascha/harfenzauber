@@ -24,6 +24,9 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   return {
     title: `${event.title} - Harfenzauber`,
     description: event.description,
+    alternates: {
+      canonical: `https://www.harfenzauber.de/veranstaltungen/${slug}`,
+    },
   };
 }
 

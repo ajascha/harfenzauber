@@ -14,7 +14,7 @@ export default function robots(): MetadataRoute.Robots {
         // Wide open for all crawlers including AI (search + training)
         userAgent: "*",
         allow: "/",
-        disallow: ["/api/", "/dashboard/", "/protected/", "/login/", "/auth/"],
+        disallow: ["/api/", "/dashboard/", "/protected/", "/login/", "/auth/", "/favicon.ico"],
       },
     ],
     sitemap: `${base}/sitemap.xml`,

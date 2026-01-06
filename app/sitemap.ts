@@ -57,11 +57,16 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     // Database might not be available during build
   }
 
-  // Dynamic events from database
+  // Dynamic events from database (only future events)
   let eventSlugs: { slug: string; created_at: Date | null }[] = [];
   try {
     const events = await prisma.hfzEvent.findMany({
-      select: { title: true, created_at: true },
+      select: { title: true, created_at: true, starts_at: true },
+      where: {
+        starts_at: {
+          gte: now,
+        },
+      },
     });
     eventSlugs = events.map((e) => ({
       slug: toSlug(e.title),
