@@ -47,7 +47,14 @@ export const updateSession = async (request: NextRequest) => {
       path.startsWith("/blog/") ||
       path === "/kontakt" ||
       path === "/login" ||
-      path.startsWith("/rechtliches/");
+      path.startsWith("/rechtliches/") ||
+      path.startsWith("/region/") ||
+      path === "/faq" ||
+      path === "/preise" ||
+      path === "/repertoire" ||
+      path === "/ueber-mich" ||
+      path === "/sitemap.xml" ||
+      path === "/robots.txt";
 
     if (
       !user &&
