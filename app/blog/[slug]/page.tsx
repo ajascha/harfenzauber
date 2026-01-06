@@ -6,8 +6,8 @@ import { Button } from "@/components/ui/button";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 
-// Blog content is DB-driven; keep it fresh after seeding without waiting for ISR.
-export const dynamic = "force-dynamic";
+// Blog content is DB-driven; use ISR to keep it fresh while maintaining static generation.
+export const revalidate = 60; // Revalidate every 60 seconds
 
 export async function generateStaticParams() {
   const posts = await prisma.hfzPost.findMany({

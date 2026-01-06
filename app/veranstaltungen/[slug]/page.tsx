@@ -110,7 +110,7 @@ export default async function EventDetailPage({ params }: Props) {
             <div className="mt-6 text-neutral-800">
               <p>
                 Anmeldung und weitere Informationen: Ruf mich gerne an unter{" "}
-                <a href="tel:02262-6187" className="text-primary underline">
+                <a href="tel:+4922626187" className="text-primary underline">
                   02262-6187
                 </a>{" "}
                 oder sende mir eine E-Mail an{" "}
